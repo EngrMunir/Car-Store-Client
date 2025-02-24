@@ -1,21 +1,15 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useAppDispatch } from "../redux/features/hook";
-import { useLoginMutation } from "../redux/features/auth/authApi";
-import { verifyToken } from "../utils/verifyToken";
-import { setUser, TUser } from "../redux/features/auth/authSlice";
+import { useAppDispatch } from "../../redux/features/hook";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { verifyToken } from "../../utils/verifyToken";
+import { setUser, TUser } from "../../redux/features/auth/authSlice";
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { register, handleSubmit, formState: { errors }, } = useForm()
-
-    const defaultValues = {
-        email:'munir@gmail.com',
-        password:'admin123'
-    }
 
     const [login] = useLoginMutation();
 
@@ -40,10 +34,7 @@ const Login = () => {
 
     return (
         <div>
-        <div className="mx-auto md:w-1/2">
-        {/* <div className="flex justify-center">
-                <img className="text-center w-20 h-20" src={logo} alt="" />
-            </div> */}
+        <div className="mx-auto md:w-1/3">
            <h2 className="text-3xl mb-6 text-center">Please Login</h2>
            <form onSubmit={handleSubmit(onSubmit)}>
               
@@ -57,7 +48,8 @@ const Login = () => {
                     errors.password && <span className="text-red-500">Password is required</span>
                 }
                <br />
-               <input className="btn btn-secondary w-full mb-4" type="submit" value="Login" />
+               
+               <input className="w-full mb-4" type="submit" value="Login" />
            </form>
            <p className="text-center mb-5">New here? Please <Link className="text-blue-500" to="/register">Register</Link> </p>
        </div>  
