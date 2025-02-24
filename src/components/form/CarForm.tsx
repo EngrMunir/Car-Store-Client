@@ -1,39 +1,39 @@
-import { Form } from "antd";
-import { ReactNode } from "react";
-import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-form";
+// import { Form } from "antd";
+// import { ReactNode } from "react";
+// import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-type TFormConfig ={
-    defaultValues?:Record<string, any>;
-    resolver?:any;
-};
+// type TFormConfig ={
+//     defaultValues?:Record<string, any>;
+//     resolver?:any;
+// };
 
-type TFromProps ={
-    onSubmit: SubmitHandler<FieldValues>;
-    children:ReactNode;
-} & TFormConfig;
+// type TFromProps ={
+//     onSubmit: SubmitHandler<FieldValues>;
+//     children:ReactNode;
+// } & TFormConfig;
 
-const CarForm = ({onSubmit, children, defaultValues, resolver }: TFromProps )=>{
-    const formConfig: TFormConfig ={};
-    if(defaultValues){
-        formConfig['defaultValues'] = defaultValues;
-    }
-    if(resolver){
-        formConfig['resolver']= resolver;
-    }
+// const CarForm = ({onSubmit, children, defaultValues, resolver }: TFromProps )=>{
+//     const formConfig: TFormConfig ={};
+//     if(defaultValues){
+//         formConfig['defaultValues'] = defaultValues;
+//     }
+//     if(resolver){
+//         formConfig['resolver']= resolver;
+//     }
 
-    const methods = useForm(formConfig);
+//     const methods = useForm(formConfig);
 
-    const submit: SubmitHandler<FieldValues> =(data)=>{
-        onSubmit(data);
-        methods.reset();
-    }
-    return (
-        <FormProvider {...methods}>
-            <Form layout="vertical" onFinish={methods.handleSubmit(submit)}>
-                {children}
-            </Form>
-        </FormProvider>
-    );
-};
+//     const submit: SubmitHandler<FieldValues> =(data)=>{
+//         onSubmit(data);
+//         methods.reset();
+//     }
+//     return (
+//         <FormProvider {...methods}>
+//             <Form layout="vertical" onFinish={methods.handleSubmit(submit)}>
+//                 {children}
+//             </Form>
+//         </FormProvider>
+//     );
+// };
 
-export default CarForm;
+// export default CarForm;
