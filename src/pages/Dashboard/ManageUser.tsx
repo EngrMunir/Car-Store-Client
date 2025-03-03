@@ -1,13 +1,14 @@
 
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
 import Swal from 'sweetalert2'
-import { useGetUsersQuery } from '@/redux/features/User/userManagementApi';
+import { useChangeUserRoleMutation, useDeleteUsersMutation, useGetUsersQuery } from '@/redux/features/User/userManagementApi';
 
 const ManageUsers = () => {
     const [filterRole, setFilterRole] = useState("");
-    const {data, error, isLoading } = useGetUsersQuery(undefined);
+    const { data } = useGetUsersQuery(undefined);
+    const [deleteUser] = useDeleteUsersMutation();
+    const [changeRole] = useChangeUserRoleMutation();
  
     const users = data?.data || [];
     console.log(users)
@@ -25,25 +26,31 @@ const ManageUsers = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: `Yes, make ${newRole}!`
-          }).then((result) => {
+          }).then(async(result) => {
             if (result.isConfirmed) {
-                axios.patch('http://localhost:5000/api/users',info)
-                .then(res =>{
-                    console.log(res.data)
-                    if(res.data. modifiedCount>0){
+                try {
+                    const res = await changeRole(info).unwrap();
+                    console.log('response',res)
+                    if (res.data.success) {
                         Swal.fire({
-                            title: "Congrats",
-                            text: `Role changed to ${newRole} successfully`,
+                            title: "Changed!",
+                            text: "Role has been changed",
                             icon: "success"
-                          });
+                        });
                     }
-                })
+                } catch (err) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to delete user",
+                        icon: "error"
+                    });
+                }
               
             }
           });
     }
 
-    const handleDelete =(userId)=>{
+    const handleDelete =(userId: string)=>{
 
         Swal.fire({
             title: "Are you sure?",
@@ -53,20 +60,26 @@ const ManageUsers = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+          }).then( async (result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/api/users/${userId}`)
-                .then(res =>{
-                    console.log(res.data)
-                    if(res.data.deletedCount>0){
+                
+                try {
+                    const response = await deleteUser(userId).unwrap();
+                    console.log('response',response)
+                    if (response.data.deletedCount > 0) {
                         Swal.fire({
                             title: "Deleted!",
                             text: "User has been deleted.",
                             icon: "success"
-                          });
+                        });
                     }
-                })
-              
+                } catch (err) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to delete user",
+                        icon: "error"
+                    });
+                }
             }
           });
     }
@@ -104,7 +117,6 @@ const ManageUsers = () => {
                             <select defaultValue={user.role} onChange={(e)=>handleRole(user._id, e.target.value)}>
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
-                                <option value="moderator">Moderator</option>
                             </select>
                         </td>
                         <td> <button onClick={()=>handleDelete(user._id)}><FaTrash className="text-red-400 text-3xl"></FaTrash></button> </td>

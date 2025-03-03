@@ -6,6 +6,14 @@ export const userManagementApi = baseApi.injectEndpoints({
       query:()=>{
         return { url:'/auth/users', method:'GET' }
       },
+      providesTags:['users']
+    }),
+    changeUserRole: builder.mutation({
+      query:(data)=>({
+        url:'/auth/role-change',
+        method:'PATCH',
+        body:data
+      })
     }),
     deleteUsers: builder.mutation({
       query:(userId)=>{
@@ -14,11 +22,13 @@ export const userManagementApi = baseApi.injectEndpoints({
           method:'DELETE',
          }
       },
+      invalidatesTags:['users']
     }),
   }),
 });
 
 export const {
   useGetUsersQuery,
-  useDeleteUsersQuery,
+  useDeleteUsersMutation,
+  useChangeUserRoleMutation,
 } = userManagementApi;
