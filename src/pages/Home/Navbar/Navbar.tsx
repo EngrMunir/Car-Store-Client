@@ -8,6 +8,8 @@ const Navbar = () => {
         <li><NavLink to="/about">About</NavLink></li>
         <li><NavLink to="/allProducts">All Car</NavLink></li>
         <li><NavLink to="/login">Login</NavLink></li>
+        <li><NavLink to="/cart">Cart</NavLink></li>
+        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100">

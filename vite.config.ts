@@ -9,4 +9,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    hmr: {
+      protocol: 'ws', // Use 'ws' or 'wss' depending on your setup
+      host: 'localhost',
+      port: 5173, // Ensure this matches your Vite server port
+    },
+  },
 })
