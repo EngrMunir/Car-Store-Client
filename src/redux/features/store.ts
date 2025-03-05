@@ -3,7 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import { baseApi } from "@/redux/api/baseApi";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist"
 import { configureStore } from "@reduxjs/toolkit";
-import { cartApi } from "./Cart/CartManagementApi";
+import { cartApi } from "./Cart/CartSlice";
 const persistConfig ={
     key:'auth',
     storage

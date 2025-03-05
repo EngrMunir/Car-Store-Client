@@ -2,7 +2,7 @@
 import { useSelector, useDispatch } from "react-redux";
 // import { fetchCart, setCart } from "../store/cartSlice";
 // import axios from "axios";
-import { useGetCartQuery } from "@/redux/features/Cart/CartManagementApi";
+import { useGetCartQuery } from "@/redux/features/Cart/CartSlice";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 const Cart = () => {
