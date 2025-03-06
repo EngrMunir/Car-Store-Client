@@ -1,4 +1,4 @@
-import { url } from "inspector";
+
 import { baseApi } from "../../api/baseApi";
 
 const courseManagementApi = baseApi.injectEndpoints({
