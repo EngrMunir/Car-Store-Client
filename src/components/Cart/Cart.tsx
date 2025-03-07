@@ -1,16 +1,25 @@
+import { selectCurrentToken } from "@/redux/features/auth/authSlice";
 import { removeFromCart, updateQuantity } from "@/redux/features/Cart/CartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hook";
 import { useCreateOrderMutation } from "@/redux/features/order/order";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const cartData = useAppSelector((state) => state.cart);
   const [ createOrder, { isError, isLoading, isSuccess, error, data }] = useCreateOrderMutation();
+  const token = useAppSelector(selectCurrentToken)
+  console.log('token from cart',token);
 
   const handlePlaceOrder = async () =>{
-    
-  }
+    if (!token) {
+      toast.error("Unauthorized: No token found!");
+      return;
+    }
+      await createOrder({cars:cartData.items});
+  };
 
   const handleUpdateQuantity = (productId: string, quantity: number) => {
     if (quantity > 0) {
@@ -21,6 +30,24 @@ const Cart = () => {
   const handleRemoveItem = (productId: string) => {
     dispatch(removeFromCart(productId));
   };
+
+  const toastId="cart";
+
+  useEffect(()=>{
+    if(isLoading) toast.loading("Processing ...",{id:toastId})
+    if(isSuccess){
+      toast.success(data?.message, {id:toastId})
+      if(data?.data){
+        setTimeout(()=>{
+          window.location.href = data.data;
+        },1000)
+        
+      }
+    }
+    if(isError){
+      toast.error(JSON.stringify(error), {id:toastId})
+    }
+  },[data?.data, data?.message, error, isError, isLoading, isSuccess]);
 
   return (
     <div className="container mx-auto p-6">
@@ -75,9 +102,25 @@ const Cart = () => {
         </table>
       )}
       
-            <button className="w-full" onClick={handlePlaceOrder}>
-              Place Order
-            </button>
+      <div className="border-b my-3"></div>
+
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-sm font-medium text-gray-700">
+          Total Quantity:
+        </span>
+        <span className="text-lg font-bold">{cartData.totalQuantity}</span>
+      </div>
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-sm font-medium text-gray-700">
+          Total Price:
+        </span>
+        <span className="text-lg font-bold">
+          ${cartData.totalPrice.toFixed(2)}
+        </span>
+      </div>
+      <button className="w-full" onClick={handlePlaceOrder}>
+        Place Order
+      </button>
           
     </div>
   );

@@ -8,8 +8,9 @@ const baseQuery = fetchBaseQuery({
     credentials:"include",
     prepareHeaders:(headers, {getState})=>{
         const token = (getState() as RootState & PersistPartial).auth?.token;
+        console.log('token from redux',token);
         if(token){
-            headers.set("authorization",`${token}`);
+            headers.set("authorization",`Bearer ${token}`);
         }
         return headers;
     },

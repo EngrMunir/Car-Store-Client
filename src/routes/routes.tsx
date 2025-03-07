@@ -11,6 +11,7 @@ import AddCar from "@/pages/Dashboard/AddCar";
 import About from "@/pages/about/About";
 import ManageCar from "@/pages/Dashboard/ManageCar";
 import ManageUsers from "@/pages/Dashboard/ManageUser";
+import OrderVerification from "@/pages/VerifyOrder";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             {
                 path:'/cart',
                 element:<Cart/>
+            },
+            {
+                path:'/order/verify',
+                element:<OrderVerification/>
             },
         ]
     },

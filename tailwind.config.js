@@ -53,6 +53,6 @@ export default {
 		},
 	  },
 	},
-	plugins: [require("daisyui")], // Replaced tailwindcss-animate with daisyui
+	plugins: [], // Replaced tailwindcss-animate with daisyui
   };
   
