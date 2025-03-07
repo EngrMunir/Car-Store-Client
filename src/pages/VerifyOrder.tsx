@@ -49,6 +49,8 @@ interface OrderData {
 export default function OrderVerification() {
   const [searchParams] = useSearchParams();
 
+  const serarchID = searchParams.get("order_id");
+
   const { isLoading, data } = useVerifyOrderQuery(
     searchParams.get("order_id"),
     {
