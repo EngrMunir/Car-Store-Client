@@ -4,12 +4,24 @@ export default {
 	content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
 	theme: {
 	  extend: {
+		container:{
+			center:true,
+			padding:{
+				DEFAULT:'1rem',
+				sm:'2rem',
+				lg:'4rem',
+				xl:'5rem',
+				'2xl':'6rem',
+			}
+		},
 		borderRadius: {
 		  lg: "var(--radius)",
 		  md: "calc(var(--radius) - 2px)",
 		  sm: "calc(var(--radius) - 4px)",
 		},
 		colors: {
+			// primary:"#ff8901",
+			// secondary:"",
 		  background: "hsl(var(--background))",
 		  foreground: "hsl(var(--foreground))",
 		  card: {
