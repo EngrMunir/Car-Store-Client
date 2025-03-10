@@ -1,6 +1,7 @@
 import { addToCart } from "@/redux/features/Cart/CartSlice";
 import { useAppDispatch } from "@/redux/features/hook";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 type CarProps ={
     car:{
@@ -25,6 +26,7 @@ const ProductCard = ({car}:CarProps) => {
             imageUrl: car.image,
           })
         );
+        toast.success('Product added to cart')
       };
     return (
         <div>
