@@ -59,7 +59,7 @@ const Footer = () => {
           
           <div className="flex flex-col items-center justify-between sm:flex-row">
               <a href="#">
-                  <img className="w-auto h-7" src="https://merakiui.com/images/full-logo.svg" alt=""/>
+                  <p className="w-auto h-7">CarShop</p>
               </a>
               <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">© Copyright 2021. All Rights Reserved.</p>
           </div>

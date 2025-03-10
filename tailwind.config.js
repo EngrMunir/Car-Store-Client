@@ -88,3 +88,4 @@ export default {
 	plugins: [], // Replaced tailwindcss-animate with daisyui
   };
   
+  

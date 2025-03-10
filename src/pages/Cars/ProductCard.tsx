@@ -39,13 +39,13 @@ const ProductCard = ({car}:CarProps) => {
                     <span className="font-bold text-gray-800 dark:text-gray-200">${car.price}</span>
                     <button
                     onClick={handleAddToCart} 
-                    className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">Add to cart</button>
+                    className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-[#fb923c] rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">Add to cart</button>
                 </div>
             </div>
         </div>
         <div>
         <Link to={`/details/${car._id}`}>
-        <button className="btn mt-2 w-full bg-primary text-white hover:bg-[#0864b9]">
+        <button className="btn mt-2 w-full bg-[#fb923c] text-white hover:bg-[#0864b9]">
           See Details
         </button>
       </Link>

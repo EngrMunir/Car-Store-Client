@@ -1,10 +1,15 @@
+import { Button } from "@/components/ui/button";
 import ProductCard from "@/pages/Cars/ProductCard";
 import { useGetAllCarsQuery } from "@/redux/features/Car/carManagementApi";
 import { TCar } from "@/types";
 import { Link } from "react-router-dom";
 
 const Featured = () => {
-    const {data: carsData } = useGetAllCarsQuery(undefined);
+    const {data: carsData, isLoading } = useGetAllCarsQuery(undefined);
+
+    if(isLoading){
+        return <p className="text-center">Loading....</p>
+    }
 
     return (
          <div>
@@ -15,7 +20,7 @@ const Featured = () => {
                 }
             </div>
             <div className="text-center mt-5">
-                <Link to="/allProducts"><button>View All</button></Link>
+                <Link to="/allProducts"><Button className="bg-[#fb923c]">View All</Button></Link>
             </div>
         </div>
     );

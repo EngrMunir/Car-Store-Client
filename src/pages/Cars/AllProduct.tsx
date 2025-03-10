@@ -4,8 +4,10 @@ import { TCar } from "@/types";
 
 
 const AllProduct = () => {
-    const {data: carsData } = useGetAllCarsQuery(undefined);
-    console.log(carsData);
+    const {data: carsData, isLoading } = useGetAllCarsQuery(undefined);
+    if(isLoading){
+        return <p className="text-center">Loading.......</p>
+    }
     return (
         <div>
             <h2 className="text-3xl text-center">Available Product</h2>

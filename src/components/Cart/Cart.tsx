@@ -19,6 +19,7 @@ const Cart = () => {
       return;
     }
       await createOrder({cars:cartData.items});
+      toast.success("Order placed Successfully")
   };
 
   const handleUpdateQuantity = (productId: string, quantity: number) => {
