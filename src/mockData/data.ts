@@ -18,16 +18,6 @@ export const NavbarMenu =[
     },
     {
         id:4,
-        title:"Login",
-        link:"/login"
-    },
-    {
-        id:5,
-        title:"Cart",
-        link:"/cart"
-    },
-    {
-        id:6,
         title:"Dashboard",
         link:"/dashboard"
     }

@@ -6,6 +6,7 @@ import ResponsiveMenu from "./ResponsiveMenu";
 import { NavbarMenu } from "@/mockData/data";
 import { FaDumbbell } from "react-icons/fa";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -38,10 +39,11 @@ const Navbar = () => {
           <button className="text-2xl hover:bg-[#ff8901] hover:text-white rounded-full p-2 duration-200">
             <CiSearch />
           </button>
-          <button className="text-2xl hover:bg-[#ff8901] hover:text-white rounded-full p-2 duration-200">
+          <NavLink to="/cart"><button className="text-2xl hover:bg-[#ff8901] hover:text-white rounded-full p-2 duration-200">
             <BsCart3 />
-          </button>
-          <button className="hover:bg-[#ff8901] font-semibold  hover:text-white rounded-md border-2 border-[#ff8901] px-6 py-2 duration-200 hidden md:block">Login</button>
+          </button></NavLink>
+          <NavLink to="/login"><button className="hover:bg-[#ff8901] font-semibold  hover:text-white rounded-md border-2 border-[#ff8901] px-6 py-2 duration-200 hidden md:block">Login</button>
+          </NavLink>
         </div>
         {/* mobile hamburger menu section */}
            <div className="md:hidden" onClick={()=>setOpen(!open)}>
