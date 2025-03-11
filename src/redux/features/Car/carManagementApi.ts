@@ -36,6 +36,12 @@ const courseManagementApi = baseApi.injectEndpoints({
                     method:'POST',
                     body:carInfo
                 })
+            }),
+            deleteCar: builder.mutation({
+                query:(carId)=>({
+                    url:`/cars/${carId}`,
+                    method:'DELETE',
+                })
             })
         }),
 });
@@ -44,4 +50,5 @@ export const {
     useGetAllCarsQuery,
     useGetSingleCarQuery,
     useAddCarMutation,
+    useDeleteCarMutation,
 } = courseManagementApi;

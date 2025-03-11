@@ -13,10 +13,10 @@ type TAuthState ={
     token:null | string;
 };
 
-const initialState:TAuthState ={
-    user:null,
-    token:null,
-};
+const initialState: TAuthState = {
+    user: JSON.parse(localStorage.getItem("authUser") || "null"),  // Load user from localStorage
+    token: localStorage.getItem("authToken") || null,  // Load token from localStorage
+  };
 
 const authSlice = createSlice({
     name:'auth',
@@ -27,10 +27,18 @@ const authSlice = createSlice({
             const { user, token } = action.payload;
             state.user = user;
             state.token = token;
+
+            // Save to localStorage
+      localStorage.setItem("authUser", JSON.stringify(action.payload.user));
+      localStorage.setItem("authToken", action.payload.token);
         },
         logout:(state)=>{
             state.user = null;
             state.token = null;
+
+             // Remove from localStorage
+            localStorage.removeItem("authUser");
+            localStorage.removeItem("authToken");
         }
     },
 });

@@ -9,7 +9,7 @@ import { cartApi } from "./Cart/CartApi";
 const persistConfig ={
     key:'auth',
     storage,
-    whitelist: ["auth","cart"],
+    whitelist: ["auth","cart",],
 }
 
 const persistedAuthReducer = persistReducer(persistConfig,authReducer);

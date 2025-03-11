@@ -1,34 +1,29 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
-import { GrDeliver } from "react-icons/gr";
-import { MdOutlineShoppingBag } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { MdAssignment } from "react-icons/md";
-import { FaUserCheck } from "react-icons/fa";
-import { GoPackage } from "react-icons/go";
-
-
-
-
+import { Outlet, useNavigate } from "react-router-dom";
+import Sidebar from "@/pages/Dashboard/Sidebar";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "@/redux/features/hook";
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+    const token = useAppSelector(state => state.auth.token);
+    const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken");
+    if (!token && !storedToken) {
+      navigate("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [token]);
+
+  if (loading) return <p>Loading...</p>;
     return (
         <div className="flex">
             {/* left side */}
-            <div className="w-64 min-h-screen">
-                <ul className="menu p-4">
-                    <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/addCar" className="flex items-center gap-2"><GoPackage/><span>Manage Products</span></NavLink></li>
-                    <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/manageUsers" className="flex items-center gap-2"><FaUserCheck/> Manage Users</NavLink></li>
-                    <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/manageCar" className="flex items-center gap-2"><MdAssignment/> Manage Orders</NavLink></li>
-                    <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/manageCar" className="flex items-center gap-2"><MdOutlineShoppingBag/><span>My Orders</span></NavLink></li>
-                    <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/manageCar" className="flex items-center gap-2"><GrDeliver/><span>Track Orders</span></NavLink></li>
-                    <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/myProfile" className="flex items-center gap-2"><CgProfile/> <span>My Profile</span></NavLink></li>
-                    <div className="divider py-3"></div> 
-                    <li className="pl-3"><Link to="/" className="flex items-center gap-2"><FaHome /><span>Home</span></Link> </li>
-                </ul>
-            </div>
+           <Sidebar/>
             {/* right side */}
-            <div className="flex-1 p-8">
+            <div className="w-full p-5">
                 <Outlet></Outlet>
             </div>
         </div>

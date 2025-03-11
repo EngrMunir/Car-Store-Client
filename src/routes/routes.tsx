@@ -9,9 +9,9 @@ import Cart from "@/components/Cart/Cart";
 import Dashboard from "@/components/layout/Dashboard";
 import AddCar from "@/pages/Dashboard/AddCar";
 import About from "@/pages/about/About";
-import ManageCar from "@/pages/Dashboard/ManageCar";
 import ManageUsers from "@/pages/Dashboard/ManageUser";
 import OrderVerification from "@/pages/VerifyOrder";
+import ManageProducts from "@/pages/Dashboard/ManageProducts";
 
 const router = createBrowserRouter([
     {
@@ -61,8 +61,8 @@ const router = createBrowserRouter([
                 element:<AddCar/>
             },
             {
-                path:'manageCar',
-                element:<ManageCar/>
+                path:'manageProducts',
+                element:<ManageProducts/>
             },
             {
                 path:'manageUsers',

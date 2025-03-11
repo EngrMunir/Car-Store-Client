@@ -22,7 +22,7 @@ const Login = () => {
                 password:data.password,
             };
             const res = await login(userInfo).unwrap();
-            localStorage.setItem('authToken',res.data.accessToken);
+            // localStorage.setItem('authToken',res.data.accessToken);
             
             const user = verifyToken(res.data.accessToken) as TUser;
     
