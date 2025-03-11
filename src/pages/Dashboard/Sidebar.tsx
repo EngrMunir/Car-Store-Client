@@ -22,7 +22,7 @@ const Sidebar = () => {
                                 <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/addCar" className="flex items-center gap-2"><GoPackage/><span>Add Products</span></NavLink></li>
                                 <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/manageProducts" className="flex items-center gap-2"><GoPackage/><span>Manage Products</span></NavLink></li>
                                 <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/manageUsers" className="flex items-center gap-2"><FaUserCheck/> Manage Users</NavLink></li>
-                                <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/manageCar" className="flex items-center gap-2"><MdAssignment/> Manage Orders</NavLink></li>
+                                <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/manageOrders" className="flex items-center gap-2"><MdAssignment/> Manage Orders</NavLink></li>
                             </>
                         )
                     }

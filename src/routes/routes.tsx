@@ -12,6 +12,7 @@ import About from "@/pages/about/About";
 import ManageUsers from "@/pages/Dashboard/ManageUser";
 import OrderVerification from "@/pages/VerifyOrder";
 import ManageProducts from "@/pages/Dashboard/ManageProducts";
+import ManageOrders from "@/pages/Dashboard/ManageOrder";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
             {
                 path:'manageProducts',
                 element:<ManageProducts/>
+            },
+            {
+                path:'manageOrders',
+                element:<ManageOrders/>
             },
             {
                 path:'manageUsers',
