@@ -11,6 +11,7 @@ const ManageOrders = () => {
     const [filterStatus, setFilterStatus] = useState("");
 
     const orders = data?.data || [];
+    console.log(orders)
 
     const handleStatusChange = async (orderId: string, newStatus: string) => {
         Swal.fire({

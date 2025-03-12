@@ -1,81 +1,91 @@
+import { useState } from "react";
 
+const faqs = [
+  {
+    question: "How can I purchase a car from Sar-Shop?",
+    answer:
+      "You can browse our inventory, select a car, and proceed to checkout. We offer multiple payment options, including financing.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer:
+      "We accept credit/debit cards, bank transfers, and financing options through our partnered banks.",
+  },
+  {
+    question: "Do you offer financing options?",
+    answer:
+      "Yes, we provide financing through our trusted partners. You can apply directly on the car's details page.",
+  },
+  {
+    question: "What is your return policy?",
+    answer:
+      "We offer a 7-day return policy if the car has not been driven more than 500 miles and is in its original condition.",
+  },
+  {
+    question: "How long does shipping take?",
+    answer:
+      "Delivery times vary by location but typically take between 5-10 business days.",
+  },
+];
 
 const FAQ = () => {
-    return (
-        <div className="bg-white dark:bg-gray-900">
-    <div className="container px-6 py-10 mx-auto">
-        <h1 className="text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white">FAQ's</h1>
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <div className="bg-white dark:bg-gray-900">
+      <div className="container px-6 py-10 mx-auto">
+        <h1 className="text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white text-center">
+          Frequently Asked Questions
+        </h1>
 
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
 
         <div>
-            <div>
-                <button className="flex items-center focus:outline-none">
-                    <svg className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4"></path></svg>
+          {faqs.map((faq, index) => (
+            <div key={index}>
+              <button
+                className="flex items-center w-full justify-between focus:outline-none px-4 py-3 text-left"
+                onClick={() => toggleFAQ(index)}
+              >
+                <h1 className="text-xl text-gray-700 dark:text-white">
+                  {faq.question}
+                </h1>
+                <svg
+                  className="w-6 h-6 text-blue-500 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{
+                    transform: openIndex === index ? "rotate(180deg)" : "rotate(0deg)",
+                  }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d={openIndex === index ? "M20 12H4" : "M12 4v16m8-8H4"}
+                  />
+                </svg>
+              </button>
 
-                    <h1 className="mx-4 text-xl text-gray-700 dark:text-white">How can I pay for my appointment ?</h1>
-                </button>
-
-                <div className="flex mt-8 md:mx-10">
-                    <span className="border border-blue-500"></span>
-
-                    <p className="max-w-3xl px-4 text-gray-500 dark:text-gray-300">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eum quae. Harum officiis reprehenderit ex quia ducimus minima id provident molestias optio nam vel, quidem iure voluptatem, repellat et ipsa.
-                    </p>
+              {openIndex === index && (
+                <div className="mt-2 px-4 text-gray-500 dark:text-gray-300">
+                  {faq.answer}
                 </div>
+              )}
+
+              <hr className="my-4 border-gray-200 dark:border-gray-700" />
             </div>
-
-            <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-            <div>
-                <button className="flex items-center focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                    </svg>
-
-                    <h1 className="mx-4 text-xl text-gray-700 dark:text-white">What can I expect at my first consultation ?</h1>
-                </button>
-            </div>
-
-            <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-            <div>
-                <button className="flex items-center focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                    </svg>
-
-                    <h1 className="mx-4 text-xl text-gray-700 dark:text-white">What are your opening hours ?</h1>
-                </button>
-            </div>
-
-            <hr className="my-8 border-gray-200 dark:border-gray-700"/>
-
-            <div>
-                <button className="flex items-center focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                    </svg>
-
-                    <h1 className="mx-4 text-xl text-gray-700 dark:text-white">Do I need a referral ?</h1>
-                </button>
-            </div>
-
-            <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-            <div>
-                <button className="flex items-center focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                    </svg>
-
-                    <h1 className="mx-4 text-xl text-gray-700 dark:text-white">Is the cost of the appointment covered by private health insurance ?</h1>
-                </button>
-            </div>
+          ))}
         </div>
+      </div>
     </div>
-</div>
-    );
+  );
 };
 
 export default FAQ;

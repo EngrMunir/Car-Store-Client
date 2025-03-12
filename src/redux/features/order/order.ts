@@ -23,7 +23,7 @@ const orderApi = baseApi.injectEndpoints({
             }),
         }),
         getAllOrders: builder.query({
-            query: () => "/orders", // Assuming the API endpoint for fetching all orders
+            query: () => "/order", // Assuming the API endpoint for fetching all orders
         }),
         updateOrderStatus: builder.mutation({
             query: ({ id, status }) => ({

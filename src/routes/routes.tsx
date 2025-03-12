@@ -13,6 +13,9 @@ import ManageUsers from "@/pages/Dashboard/ManageUser";
 import OrderVerification from "@/pages/VerifyOrder";
 import ManageProducts from "@/pages/Dashboard/ManageProducts";
 import ManageOrders from "@/pages/Dashboard/ManageOrder";
+import MyOrders from "@/pages/Dashboard/MyOrders";
+import TrackOrder from "@/pages/Dashboard/TrackOrder";
+import MyProfile from "@/pages/Dashboard/MyProfile";
 
 const router = createBrowserRouter([
     {
@@ -72,6 +75,18 @@ const router = createBrowserRouter([
             {
                 path:'manageUsers',
                 element:<ManageUsers/>
+            },
+            {
+                path:'myOrders',
+                element:<MyOrders/>
+            },
+            {
+                path:'trackOrders',
+                element:<TrackOrder/>
+            },
+            {
+                path:'myProfile',
+                element:<MyProfile/>
             }
         ]
     }

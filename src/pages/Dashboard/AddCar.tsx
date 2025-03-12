@@ -2,135 +2,124 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAddCarMutation } from '@/redux/features/Car/carManagementApi';
 import { toast } from 'sonner';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Select, SelectTrigger, SelectValue, SelectItem, SelectContent } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
-const image_hosting_key= import.meta.env.VITE_IMAGE_HOSTING_KEY;
-
-const image_hosting_api=`https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddCarForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [addCarMutation]= useAddCarMutation();
+    const [addCarMutation] = useAddCarMutation();
 
-    const onSubmit = async(data)=>{
-      const imageFile = { image: data.image[0] };
-      const res = await axios.post(image_hosting_api, imageFile, {
-        headers:{
-          'content-type':'multipart/form-data'
-      }
-      });
-      if(res.data.success){
-        const carInfo ={
-          ...data,
-          year: Number(data.year),
-          price: Number(data.price),
-          quantity: Number(data.quantity),
-          image:res.data.data.display_url
-        };
-        const res1 = await addCarMutation(carInfo);
-
-        if(res1.data.success){
-          toast.success("Car added to database",{duration:1000});
+    const onSubmit = async (data) => {
+        const imageFile = new FormData();
+        imageFile.append("image", data.image[0]);
+        
+        const res = await axios.post(image_hosting_api, imageFile, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        
+        if (res.data.success) {
+            const carInfo = {
+                ...data,
+                year: Number(data.year),
+                price: Number(data.price),
+                quantity: Number(data.quantity),
+                image: res.data.data.display_url
+            };
+            
+            const res1 = await addCarMutation(carInfo);
+            if (res1.data.success) {
+                toast.success("Car added successfully", { duration: 1000 });
+            }
         }
-      }
-    }
+    };
 
     return (
-        <div className="bg-[#F4F3F0] p-24 mb-10">
-            <h2 className='text-3xl text-center font-extrabold'>Add A Car</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                {/* Brand and Model Row */}
-                <div className='md:flex gap-3 mb-8'>
-                    <div className='form-control md:w-1/2'>
-                        <label className="label">
-                            <span className='label-text'>Brand</span>
-                        </label>
-                        <input type="text" {...register('brand', { required: true })} placeholder='Car Brand' className='input input-bordered w-full' />
-                        {errors.brand && <span className="text-red-500">Brand is required</span>}
+        <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
+            <h2 className='text-3xl text-center font-bold mb-6'>Add A Car</h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {/* Brand & Model */}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                        <Label>Brand</Label>
+                        <Input type="text" {...register('brand', { required: true })} placeholder='Car Brand' />
+                        {errors.brand && <p className="text-red-500 text-sm">Brand is required</p>}
                     </div>
-                    <div className='form-control md:w-1/2'>
-                        <label className="label">
-                            <span className='label-text'>Model</span>
-                        </label>
-                        <input type="text" {...register('model', { required: true })} placeholder='Car Model' className='input input-bordered w-full' />
-                        {errors.model && <span className="text-red-500">Model is required</span>}
+                    <div>
+                        <Label>Model</Label>
+                        <Input type="text" {...register('model', { required: true })} placeholder='Car Model' />
+                        {errors.model && <p className="text-red-500 text-sm">Model is required</p>}
                     </div>
                 </div>
                 
-                {/* Year and Price Row */}
-                <div className='md:flex gap-3 mb-8'>
-                    <div className='form-control md:w-1/2'>
-                        <label className="label">
-                            <span className='label-text'>Year</span>
-                        </label>
-                        <input type="number" {...register('year', { required: true, min: 1994, valueAsNumber:true })} placeholder='Manufacturing Year' className='input input-bordered w-full' />
-                        {errors.year && <span className="text-red-500">Year is required (Min: 1994)</span>}
+                {/* Year & Price */}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                        <Label>Year</Label>
+                        <Input type="number" {...register('year', { required: true, min: 1994 })} placeholder='Manufacturing Year' />
+                        {errors.year && <p className="text-red-500 text-sm">Year is required (Min: 1994)</p>}
                     </div>
-                    <div className='form-control md:w-1/2'>
-                        <label className="label">
-                            <span className='label-text'>Price ($)</span>
-                        </label>
-                        <input type="number" {...register('price', { required: true, min: 0 , valueAsNumber:true})} placeholder='Price' className='input input-bordered w-full' />
-                        {errors.price && <span className="text-red-500">Price is required</span>}
+                    <div>
+                        <Label>Price ($)</Label>
+                        <Input type="number" {...register('price', { required: true, min: 0 })} placeholder='Price' />
+                        {errors.price && <p className="text-red-500 text-sm">Price is required</p>}
                     </div>
                 </div>
                 
-                {/* Category and Quantity Row */}
-                <div className='md:flex gap-3 mb-8'>
-                    <div className='form-control md:w-1/2'>
-                        <label className="label">
-                            <span className='label-text'>Category</span>
-                        </label>
-                        <select {...register('category', { required: true })} className="select select-bordered w-full">
-                            <option value="">Select Category</option>
-                            <option value="Sedan">Sedan</option>
-                            <option value="SUV">SUV</option>
-                            <option value="Truck">Truck</option>
-                            <option value="Coupe">Coupe</option>
-                            <option value="Convertible">Convertible</option>
-                        </select>
-                        {errors.category && <span className="text-red-500">Category is required</span>}
+                {/* Category & Quantity */}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                        <Label>Category</Label>
+                        <Select {...register('category', { required: true })}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Sedan">Sedan</SelectItem>
+                                <SelectItem value="SUV">SUV</SelectItem>
+                                <SelectItem value="Truck">Truck</SelectItem>
+                                <SelectItem value="Coupe">Coupe</SelectItem>
+                                <SelectItem value="Convertible">Convertible</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        {errors.category && <p className="text-red-500 text-sm">Category is required</p>}
                     </div>
-                    <div className='form-control md:w-1/2'>
-                        <label className="label">
-                            <span className='label-text'>Quantity</span>
-                        </label>
-                        <input type="number" {...register('quantity', { required: true, min: 0, valueAsNumber:true })} placeholder='Quantity' className='input input-bordered w-full' />
-                        {errors.quantity && <span className="text-red-500">Quantity is required</span>}
+                    <div>
+                        <Label>Quantity</Label>
+                        <Input type="number" {...register('quantity', { required: true, min: 0 })} placeholder='Quantity' />
+                        {errors.quantity && <p className="text-red-500 text-sm">Quantity is required</p>}
                     </div>
                 </div>
                 
-                {/* Image and In Stock Row */}
-                <div className='md:flex gap-3 mb-8'>
-                    <div className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text">Image</span>
+                {/* Image & In Stock */}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                        <Label>Image</Label>
+                        <Input type="file" {...register('image', { required: true })} />
+                        {errors.image && <p className="text-red-500 text-sm">Image is required</p>}
                     </div>
-                    <input {...register('image',{required:true})} type="file" className="file-input w-full max-w-xs" />
-                    {errors.image && <span className="text-red-500">Image is required</span>}
-                </div>
-
-                    <div className='form-control md:w-1/2'>
-                        <label className="label cursor-pointer flex items-center gap-2">
-                            <span className='label-text'>In Stock</span>
-                            <input type="checkbox" {...register('inStock')} className='checkbox' defaultChecked />
-                        </label>
+                    <div className='flex items-center gap-2'>
+                        <Checkbox {...register('inStock')} defaultChecked />
+                        <Label>In Stock</Label>
                     </div>
                 </div>
                 
                 {/* Description */}
-                <div className='mb-8'>
-                    <div className='form-control w-full'>
-                        <label className="label">
-                            <span className='label-text'>Description</span>
-                        </label>
-                        <textarea {...register('description', { required: true })} placeholder='Car Description' className='textarea textarea-bordered w-full'></textarea>
-                        {errors.description && <span className="text-red-500">Description is required</span>}
-                    </div>
+                <div>
+                    <Label>Description</Label>
+                    <Textarea {...register('description', { required: true })} placeholder='Car Description' />
+                    {errors.description && <p className="text-red-500 text-sm">Description is required</p>}
                 </div>
                 
                 {/* Submit Button */}
                 <div className='text-center'>
-                    <input className="btn btn-secondary w-1/2 mb-2" type="submit" value="Add Car" />
+                    <Button type="submit" className="w-full">Add Car</Button>
                 </div>
             </form>
         </div>

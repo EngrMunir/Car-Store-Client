@@ -24,6 +24,14 @@ export const userManagementApi = baseApi.injectEndpoints({
       },
       invalidatesTags:['users']
     }),
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: "/auth/update-profile",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
@@ -31,4 +39,5 @@ export const {
   useGetUsersQuery,
   useDeleteUsersMutation,
   useChangeUserRoleMutation,
+  useUpdateProfileMutation
 } = userManagementApi;

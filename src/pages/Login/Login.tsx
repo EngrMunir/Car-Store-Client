@@ -5,57 +5,60 @@ import { useAppDispatch } from "../../redux/features/hook";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { verifyToken } from "../../utils/verifyToken";
 import { setUser, TUser } from "../../redux/features/auth/authSlice";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { register, handleSubmit, formState: { errors }, } = useForm()
-
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [login] = useLoginMutation();
 
-    const onSubmit = async(data:FieldValues) =>{
-        const toastId = toast.loading('Logging in');
-
+    const onSubmit = async (data: FieldValues) => {
+        const toastId = toast.loading("Logging in...");
         try {
-            const userInfo ={
-                email:data.email,
-                password:data.password,
+            const userInfo = {
+                email: data.email,
+                password: data.password,
             };
             const res = await login(userInfo).unwrap();
-            // localStorage.setItem('authToken',res.data.accessToken);
-            
             const user = verifyToken(res.data.accessToken) as TUser;
-    
-            dispatch(setUser({user:user, token:res.data.accessToken}));
-            toast.success('Logged in',{id:toastId, duration:2000});
-            navigate('/')
+            dispatch(setUser({ user, token: res.data.accessToken }));
+            toast.success("Logged in", { id: toastId, duration: 2000, position:'top-center' });
+            navigate("/");
         } catch (err) {
-            toast.error('Something went wrong',{id:toastId, duration:2000});
+            toast.error("Something went wrong", { id: toastId, duration: 2000 });
         }
-    }
+    };
 
     return (
-        <div>
-        <div className="mx-auto md:w-1/3">
-           <h2 className="text-3xl mb-6 text-center">Please Login</h2>
-           <form onSubmit={handleSubmit(onSubmit)}>
-              
-               <input type="email" placeholder="Email" {...register('email', {required:true})} className="border w-full py-2 px-4 mb-4" />
-               {
-                    errors.email && <span className="text-red-500">Email is required</span>
-                }
-               <br />
-               <input type="password" placeholder="Password" {...register('password',{required:true})} className="border w-full py-2 px-4 mb-4" />
-               {
-                    errors.password && <span className="text-red-500">Password is required</span>
-                }
-               <br />
-               
-               <input className="w-full mb-4" type="submit" value="Login" />
-           </form>
-           <p className="text-center mb-5">New here? Please <Link className="text-blue-500" to="/register">Register</Link> </p>
-       </div>  
-      </div>   
+        <div className="flex justify-center items-center min-h-screen">
+            <Card className="w-full max-w-md shadow-lg">
+                <CardHeader>
+                    <CardTitle className="text-center text-2xl">Login</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                        <div>
+                            <Label htmlFor="email">Email</Label>
+                            <Input type="email" id="email" {...register("email", { required: true })} />
+                            {errors.email && <span className="text-red-500 text-sm">Email is required</span>}
+                        </div>
+                        <div>
+                            <Label htmlFor="password">Password</Label>
+                            <Input type="password" id="password" {...register("password", { required: true })} />
+                            {errors.password && <span className="text-red-500 text-sm">Password is required</span>}
+                        </div>
+                        <Button type="submit" className="w-full">Login</Button>
+                    </form>
+                    <p className="text-center text-sm mt-4">
+                        New here? <Link className="text-blue-500" to="/register">Register</Link>
+                    </p>
+                </CardContent>
+            </Card>
+        </div>
     );
 };
 
