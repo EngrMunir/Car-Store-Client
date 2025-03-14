@@ -1,60 +1,61 @@
+import { useState } from "react";
+import { useUpdatePasswordMutation } from "@/redux/features/User/userManagementApi";
 import { useAppSelector } from "@/redux/features/hook";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useState } from "react";
 import { toast } from "sonner";
-import { useUpdateProfileMutation } from "@/redux/features/User/userManagementApi";
 
 const MyProfile = () => {
     const user = useAppSelector(selectCurrentUser);
-    console.log('user ',user);
-    const [name, setName] = useState(user?.name || "");
-    const [profilePic, setProfilePic] = useState(user?.profilePic || "");
-    const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+    console.log('user in profile', user)
 
-    const handleUpdate = async () => {
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
+
+    const handlePasswordChange = async () => {
+        if (!oldPassword || !newPassword) {
+            toast.error("Please fill in both password fields.",{
+                position:"top-center"
+            });
+            return;
+        }
+
         try {
-            const updatedUser = await updateProfile({ name, profilePic }).unwrap();
-            toast.success("Profile updated successfully!");
+            await updatePassword({ email: user?.email, oldPassword, newPassword }).unwrap();
+            toast.success("Password updated successfully!",{position:"top-center"});
+            setOldPassword("");
+            setNewPassword("");
         } catch (error) {
-            toast.error("Failed to update profile!");
+            toast.error(error.data?.message || "Failed to update password.");
         }
     };
 
     return (
         <div className="p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
-            <h2 className="text-2xl font-semibold mb-4">My Profile</h2>
-            
-            <div className="flex flex-col items-center">
-                <img
-                    src={profilePic || "/default-avatar.png"}
-                    alt="Profile"
-                    className="w-24 h-24 rounded-full border mb-4"
+            <h2 className="text-2xl font-semibold mb-4">Change Password</h2>
+
+            <div className="flex flex-col space-y-3">
+                <input
+                    type="password"
+                    className="border p-2 w-full rounded-md"
+                    placeholder="Old Password"
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
                 />
                 <input
-                    type="text"
-                    className="border p-2 w-full rounded-md mb-2"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                    type="text"
-                    className="border p-2 w-full rounded-md mb-2"
-                    placeholder="Profile Picture URL"
-                    value={profilePic}
-                    onChange={(e) => setProfilePic(e.target.value)}
+                    type="password"
+                    className="border p-2 w-full rounded-md"
+                    placeholder="New Password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                 />
                 <button
-                    className="bg-blue-500 text-white py-2 px-4 rounded-md mt-2 disabled:opacity-50"
-                    onClick={handleUpdate}
+                    className="bg-blue-500 text-white py-2 px-4 rounded-md disabled:opacity-50"
+                    onClick={handlePasswordChange}
                     disabled={isLoading}
                 >
-                    {isLoading ? "Updating..." : "Update Profile"}
+                    {isLoading ? "Updating..." : "Update Password"}
                 </button>
-            </div>
-
-            <div className="mt-4">
-                <p><strong>Email:</strong> {user?.email}</p>
-                <p><strong>Role:</strong> {user?.role}</p>
             </div>
         </div>
     );

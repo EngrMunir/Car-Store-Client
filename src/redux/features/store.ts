@@ -1,6 +1,5 @@
 import storage from "redux-persist/lib/storage"
 import authReducer from "../features/auth/authSlice";
-import cartReducer from "../features/Cart/CartSlice";
 import { baseApi } from "@/redux/api/baseApi";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist"
 import { configureStore } from "@reduxjs/toolkit";
@@ -16,7 +15,6 @@ const persistedAuthReducer = persistReducer(persistConfig,authReducer);
 
 export const store = configureStore({
     reducer:{
-        cart: cartReducer,
         [baseApi.reducerPath]:baseApi.reducer,
         auth: persistedAuthReducer,
     },

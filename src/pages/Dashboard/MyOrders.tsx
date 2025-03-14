@@ -5,19 +5,17 @@ import { useGetAllOrdersQuery } from "@/redux/features/order/order";
 
 const MyOrders = () => {
     const user = useAppSelector(selectCurrentUser);
-    console.log('user',user)
-    const { data: orders, isLoading, error } = useGetAllOrdersQuery(undefined);
-    console.log('orders',orders);
+    
+    const { data: orders, isLoading, error } = useGetAllOrdersQuery(user.email);
+    // console.log('orders',orders);
     
     if (isLoading) return <p className="text-center">Loading orders...</p>;
     if (error) return <p className="text-center text-red-500">Error fetching orders.</p>;
 
-    const userOrders = orders?.filter(order => order.userId === user?.id);
-
     return (
         <div className="p-5">
             <h2 className="text-2xl font-bold mb-4">My Orders</h2>
-            {userOrders?.length === 0 ? (
+            {orders?.data.length === 0 ? (
                 <p className="text-gray-600">No orders found.</p>
             ) : (
                 <div className="overflow-x-auto">
@@ -33,11 +31,11 @@ const MyOrders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {userOrders.map(order => (
+                            {orders.data.map(order => (
                                 <tr key={order.id} className="text-center border">
-                                    <td className="border p-2">{order.id}</td>
+                                    <td className="border p-2">{order._id}</td>
                                     <td className="border p-2">{order.productName}</td>
-                                    <td className="border p-2">{order.quantity}</td>
+                                    <td className="border p-2">{order.products.reduce((total, product) => total + product.quantity, 0)}</td>
                                     <td className="border p-2">${order.totalPrice}</td>
                                     <td className="border p-2">{order.status}</td>
                                     <td className="border p-2">

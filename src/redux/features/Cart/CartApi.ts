@@ -1,42 +1,59 @@
+
 import { baseApi } from "@/redux/api/baseApi";
 
 export const cartApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
-    getCart: builder.query({
-      query: () => ({
-        url: "/cart/cartItem",
-        method: "GET",
-      }),
-      providesTags: ["cart"],
+    endpoints: (builder) => ({
+        getIndividualCartItems: builder.query({
+            query: (email) => ({
+                url: `/cart/by-email/${email}`,
+                method: "GET",
+            }),
+            providesTags: ["cart"],
+        }),
+        addToCart: builder.mutation({
+            query: (cartItem) => ({
+                url: "/cart/add",
+                method: "POST",
+                body: cartItem,
+            }),
+            invalidatesTags: ["cart"],
+        }),
+        removeFromCart: builder.mutation({
+            query: (itemId) => ({
+                url: `/cart/remove/${itemId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["cart"],
+        }),
+        increaseQuantity: builder.mutation({
+            query: ({ productId, email}) => ({
+                url: `/cart/increase-quantity/${email}/${productId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["cart"],
+        }),
+        decreaseQuantity: builder.mutation({
+            query: ({ productId, email }) => ({
+                url: `/cart/decrease-quantity/${email}/${productId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["cart"],
+        }),
+        clearCart: builder.mutation({
+            query: () => ({
+                url: "/cart/clear",
+                method: "DELETE",
+            }),
+            invalidatesTags: ["cart"],
+        }),
     }),
-    addToCart: builder.mutation({
-      query: (cartItem) => ({
-        url: "/cart/add",
-        method: "POST",
-        body: cartItem,
-      }),
-      invalidatesTags: ["cart"],
-    }),
-    removeFromCart: builder.mutation({
-      query: (itemId) => ({
-        url: `/cart/remove/${itemId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["cart"],
-    }),
-    clearCart: builder.mutation({
-      query: () => ({
-        url: "/cart/clear",
-        method: "DELETE",
-      }),
-      invalidatesTags: ["cart"],
-    }),
-  }),
 });
 
 export const {
-  useGetCartQuery,
-  useAddToCartMutation,
-  useRemoveFromCartMutation,
-  useClearCartMutation,
+    useAddToCartMutation,
+    useRemoveFromCartMutation,
+    useClearCartMutation,
+    useGetIndividualCartItemsQuery,
+    useIncreaseQuantityMutation,
+    useDecreaseQuantityMutation
 } = cartApi;

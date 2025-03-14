@@ -25,7 +25,8 @@ const courseManagementApi = baseApi.injectEndpoints({
           }),
             getSingleCar: builder.query({
                 query:(carId)=>{
-                    return { url:`/cars/${carId}`,
+                    return { 
+                    url:`/cars/${carId}`,
                     method:'GET',
                 }
                 },

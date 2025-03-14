@@ -1,5 +1,6 @@
-import { addToCart } from "@/redux/features/Cart/CartSlice";
-import { useAppDispatch } from "@/redux/features/hook";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAddToCartMutation } from "@/redux/features/Cart/CartApi";
+import { useAppSelector } from "@/redux/features/hook";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -13,20 +14,16 @@ type CarProps ={
 }
 
 const ProductCard = ({car}:CarProps) => {
-    const dispatch = useAppDispatch();
+    const user = useAppSelector(selectCurrentUser);
+    const [addToCartMutation] = useAddToCartMutation();
 
-    const handleAddToCart = () => {
-        dispatch(
-          addToCart({
-            product: car._id,
-            name: car.brand,
-            price: car.price,
-            quantity: 1, 
-            stock: 10,
-            imageUrl: car.image,
-          })
-        );
-        toast.success('Product added to cart')
+    const handleAddToCart = async() => {        
+      try {
+        await addToCartMutation({ email: user?.email, productId: car._id }).unwrap();
+        toast.success("Product added to cart", { position: "top-center" });
+      } catch (error) {
+        toast.error("Failed to add to cart", { position: "top-center" });
+      }
       };
     return (
         <div>
