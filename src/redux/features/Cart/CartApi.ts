@@ -1,4 +1,3 @@
-
 import { baseApi } from "@/redux/api/baseApi";
 
 export const cartApi = baseApi.injectEndpoints({
@@ -19,8 +18,8 @@ export const cartApi = baseApi.injectEndpoints({
             invalidatesTags: ["cart"],
         }),
         removeFromCart: builder.mutation({
-            query: (itemId) => ({
-                url: `/cart/remove/${itemId}`,
+            query: ({productId, email}) => ({
+                url: `/cart/remove/${email}/${productId}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["cart"],
@@ -40,8 +39,8 @@ export const cartApi = baseApi.injectEndpoints({
             invalidatesTags: ["cart"],
         }),
         clearCart: builder.mutation({
-            query: () => ({
-                url: "/cart/clear",
+            query: (email) => ({
+                url: `/cart/clear/${email}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["cart"],

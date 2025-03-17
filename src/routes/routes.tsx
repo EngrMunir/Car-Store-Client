@@ -16,14 +16,16 @@ import ManageOrders from "@/pages/Dashboard/ManageOrder";
 import MyOrders from "@/pages/Dashboard/MyOrders";
 import TrackOrder from "@/pages/Dashboard/TrackOrder";
 import MyProfile from "@/pages/Dashboard/MyProfile";
+import ErrorPage from "@/pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path:'/',
         element:<Main/>,
+        errorElement:<ErrorPage/>,
         children:[
             {
-                path:'/',
+                index:true,
                 element:<Home/>
             },
             {

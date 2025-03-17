@@ -1,5 +1,4 @@
 import { useGetSingleCarQuery } from "@/redux/features/Car/carManagementApi";
-import { useAppDispatch } from "@/redux/features/hook";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/features/hook";
@@ -8,9 +7,9 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 const Details = () => {
     const { id } = useParams();
-    const dispatch = useAppDispatch();
+    console.log(id);
     const { data: car, isLoading } = useGetSingleCarQuery(id);
-    const [addToCart, { isLoading: addToCartLoading }] = useAddToCartMutation(); // Use the mutation hook
+    const [addToCartMutation] = useAddToCartMutation();
     const user = useAppSelector(selectCurrentUser);
 
     if (isLoading) {
@@ -18,28 +17,15 @@ const Details = () => {
     }
 
     const handleAddToCart = async () => {
-        if(!user?.email){
-          toast.error("Please login to add to cart.", {position:'top-center'});
-          return;
-        }
-
         try {
-            await addToCart({
-                product: car?.data._id,
-                name: car?.data.brand,
-                price: car?.data.price,
-                quantity: 1,
-                stock: 10,
-                imageUrl: car?.data.image,
-                email: user?.email, //send user email to backend.
-            }).unwrap(); // Use unwrap to handle errors
+            await addToCartMutation({ email: user?.email, productId: car?.data._id }).unwrap();
             toast.success("Product added to cart", { position: "top-center" });
-        } catch (error: any) {
-            toast.error(error?.data?.message || "Failed to add to cart", { position: "top-center" });
+        } catch (error) {
+            toast.error("Failed to add to cart", { position: "top-center" });
         }
     };
 
-    return (
+    return ( // Added return statement here!
         <div className="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 mx-auto">
             <div className="w-1/3 bg-cover" style={{ backgroundImage: `url(${car?.data?.image})` }}></div>
 

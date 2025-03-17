@@ -5,10 +5,11 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 import { configureStore } from "@reduxjs/toolkit";
 import { cartApi } from "./Cart/CartApi";
 
+
 const persistConfig ={
     key:'auth',
     storage,
-    whitelist: ["auth","cart",],
+    // whitelist: ["auth"]
 }
 
 const persistedAuthReducer = persistReducer(persistConfig,authReducer);
@@ -18,12 +19,14 @@ export const store = configureStore({
         [baseApi.reducerPath]:baseApi.reducer,
         auth: persistedAuthReducer,
     },
-    middleware: getDefaultMiddlewares => getDefaultMiddlewares({
+    middleware: (getDefaultMiddlewares) => getDefaultMiddlewares({
         serializableCheck:{
-            ignoredActions:[FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE,REGISTER]
+            ignoredActions:[FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE,REGISTER],
         }
+   
     }).concat(baseApi.middleware, cartApi.middleware)
 });
+
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
