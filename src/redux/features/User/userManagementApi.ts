@@ -8,6 +8,16 @@ export const userManagementApi = baseApi.injectEndpoints({
       },
       providesTags:['users']
     }),
+
+     // Get a specific user by email
+     getSingleUser: builder.query({
+      query: (email) => ({
+        url: `/users/${email}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
     changeUserRole: builder.mutation({
       query:(data)=>({
         url:'/auth/role-change',
@@ -39,13 +49,34 @@ export const userManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
+     // Update a specific user by ID
+     updateUserProfile: builder.mutation({
+      query: ({ id, userData }) => ({
+        url: `/users/update-profile/${id}`,
+        method: "PATCH",
+        body: userData,
+      }),
+      invalidatesTags: ["users", "user"],
+    }),
+
+    // Update a specific user photo by ID
+    updateUserProfilePhoto: builder.mutation({
+      query: ({ id, userData }) => ({
+        url: `/users/update-profile-photo/${id}`,
+        method: "PATCH",
+        body: userData,
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
 export const {
   useGetUsersQuery,
+  useGetSingleUserQuery,
   useDeleteUsersMutation,
   useChangeUserRoleMutation,
   useUpdateProfileMutation,
+  useUpdateUserProfilePhotoMutation,
   useUpdatePasswordMutation
 } = userManagementApi;

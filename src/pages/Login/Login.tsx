@@ -1,14 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
-import { FieldValues, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { useAppDispatch } from "../../redux/features/hook";
-import { useLoginMutation } from "../../redux/features/auth/authApi";
-import { verifyToken } from "../../utils/verifyToken";
-import { setUser, TUser } from "../../redux/features/auth/authSlice";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/features/hook";
+import { verifyToken } from "@/utils/verifyToken";
+import { Label } from "@radix-ui/react-label";
+import { FieldValues, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
 
 const Login = () => {
     const navigate = useNavigate();

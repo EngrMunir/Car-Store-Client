@@ -21,9 +21,13 @@ const ProductCard = ({car}:CarProps) => {
       try {
         await addToCartMutation({ email: user?.email, productId: car._id }).unwrap();
         toast.success("Product added to cart", { position: "top-center" });
-      } catch (error) {
-        toast.error("Failed to add to cart", { position: "top-center" });
-      }
+    } catch (err: any) {
+        if (err?.data?.message) {
+            toast.error(err.data.message, { position: "top-center" }); // Display backend error message
+        } else {
+            toast.error("Failed to add to cart", { position: "top-center" }); // Generic error
+        }
+    }
       };
     return (
         <div>
