@@ -20,7 +20,7 @@ const Register = () => {
             };
 
             // Sending registration request using fetch
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const response = await fetch('https://car-store-backend-teal.vercel.app/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,6 +34,7 @@ const Register = () => {
 
             toast.success("Account created successfully", { id: toastId, duration: 2000 });
             navigate("/login"); 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             toast.error("Registration failed", { id: toastId, duration: 2000 });
         }

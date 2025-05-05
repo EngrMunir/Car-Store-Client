@@ -7,9 +7,9 @@ const AllProduct = () => {
   const [search, setSearch] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const [model, setModel] = useState("");
-  const [priceMin, setPriceMin] = useState("");
-  const [priceMax, setPriceMax] = useState("");
+  const [model] = useState("");
+  const [priceMin] = useState("");
+  const [priceMax] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 

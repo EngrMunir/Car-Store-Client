@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppSelector } from "@/redux/features/hook";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
-import { useGetAllOrdersQuery } from "@/redux/features/order/order";
+import { useGetOrderByEmailQuery } from "@/redux/features/order/order";
 
 const MyOrders = () => {
     const user = useAppSelector(selectCurrentUser);
     
-    const { data: orders, isLoading, error } = useGetAllOrdersQuery(user.email);
+    const { data: orders, isLoading, error } = useGetOrderByEmailQuery(user?.email);
     // console.log('orders',orders);
     
     if (isLoading) return <p className="text-center">Loading orders...</p>;
@@ -31,11 +32,11 @@ const MyOrders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.data.map(order => (
+                            {orders.data.map((order:any )=> (
                                 <tr key={order.id} className="text-center border">
                                     <td className="border p-2">{order._id}</td>
                                     <td className="border p-2">{order.productName}</td>
-                                    <td className="border p-2">{order.products.reduce((total, product) => total + product.quantity, 0)}</td>
+                                    <td className="border p-2">{order.products.reduce((total:number, product:any) => total + product.quantity, 0)}</td>
                                     <td className="border p-2">${order.totalPrice}</td>
                                     <td className="border p-2">{order.status}</td>
                                     <td className="border p-2">

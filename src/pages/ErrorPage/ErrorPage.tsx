@@ -26,7 +26,7 @@ const ErrorPage = () => {
             <div className="flex flex-col min-h-screen justify-center md:px-10 py-10 px-4">
               <div className="text-center">
                 <Link to={"/"}>
-                  <img src={errorImage} className="mx-auto w-20" alt="" />
+                  {/* <img src={errorImage} className="mx-auto w-20" alt="" /> */}
                 </Link>
               </div>
               <div className=" text-center my-auto ">

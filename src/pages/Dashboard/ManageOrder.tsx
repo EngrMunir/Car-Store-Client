@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDeleteOrderMutation, useGetAllOrdersQuery, useUpdateOrderStatusMutation } from "@/redux/features/order/order";
 import { useState } from "react";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 
@@ -29,6 +30,7 @@ const ManageOrders = () => {
                     if (response.success) {
                         Swal.fire("Updated!", "Order status has been changed.", "success");
                     }
+                
                 } catch (error) {
                     Swal.fire("Error!", "Failed to update order status.", "error");
                 }
@@ -89,17 +91,17 @@ const ManageOrders = () => {
                     </thead>
                     <tbody>
                         {orders
-                            .filter(order => !filterStatus || order.status === filterStatus)
-                            .map((order, index) => (
-                                <tr key={order._id} className="border-t">
+                            .filter((order:any) => !filterStatus || order.status === filterStatus)
+                            .map((item:any, index:number) => (
+                                <tr key={item._id} className="border-t">
                                     <td className="p-2 border">{index + 1}</td>
-                                    <td className="p-2 border">{order.customerName}</td>
-                                    <td className="p-2 border">{order.productName}</td>
-                                    <td className="p-2 border">${order.totalPrice}</td>
+                                    <td className="p-2 border">{item.customerName}</td>
+                                    <td className="p-2 border">{item.productName}</td>
+                                    <td className="p-2 border">${item.totalPrice}</td>
                                     <td className="p-2 border">
                                         <select 
-                                            value={order.status}
-                                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                                            value={item.status}
+                                            onChange={(e) => handleStatusChange(item._id, e.target.value)}
                                             className="border p-1 rounded"
                                         >
                                             <option value="pending">Pending</option>
@@ -108,7 +110,7 @@ const ManageOrders = () => {
                                         </select>
                                     </td>
                                     <td className="p-2 border flex gap-2">
-                                        <button onClick={() => handleDeleteOrder(order._id)} className="text-red-500">
+                                        <button onClick={() => handleDeleteOrder(item._id)} className="text-red-500">
                                             <FaTrash size={20} />
                                         </button>
                                     </td>

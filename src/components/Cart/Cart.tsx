@@ -1,4 +1,4 @@
-import { selectCurrentToken, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useClearCartMutation, useDecreaseQuantityMutation, useGetIndividualCartItemsQuery, useIncreaseQuantityMutation, useRemoveFromCartMutation } from "@/redux/features/Cart/CartApi";
 import { useAppSelector } from "@/redux/features/hook";
 import { useCreateOrderMutation } from "@/redux/features/order/order";
@@ -7,17 +7,12 @@ import { toast } from "sonner";
 
 const Cart = () => {
   const user = useAppSelector(selectCurrentUser);
-  console.log("Fetching cart data for:", user?.email);
   const { data: cartData, error, isLoading } = useGetIndividualCartItemsQuery(user?.email);
   const [createOrder, { isError, isSuccess, data }] = useCreateOrderMutation();
-  const token = useAppSelector(selectCurrentToken);
   const [increaseQuantityMutation] = useIncreaseQuantityMutation();
   const [decreaseQuantityMutation] = useDecreaseQuantityMutation();
   const [removeFromCartMutation] = useRemoveFromCartMutation();
   const [clearCartMutation] = useClearCartMutation();
-
-  console.log('token from cart', token);
-  console.log('cartData', cartData);
 
   const handlePlaceOrder = async () => {
     if (!cartData?.data?.items) {
@@ -25,7 +20,7 @@ const Cart = () => {
       return;
     }
 
-    const orderItems = cartData.data.items.map(item => ({
+    const orderItems = cartData.data.items.map((item: { product: { _id: string; price: number; name: string }; quantity: number }) => ({
       product: item.product._id,
       quantity: item.quantity,
     }));
@@ -34,15 +29,43 @@ const Cart = () => {
   };
 
   const handleIncreaseQuantity = async (productId: string) => {
-    await increaseQuantityMutation({ productId: productId, email: user?.email });
+    
+    try {
+      const res = await increaseQuantityMutation({ productId: productId, email: user?.email });
+      toast.success(res.data.message, { position: "top-center" });
+  } catch (err: any) {
+      if (err?.data?.message) {
+          toast.error(err.data.message, { position: "top-center" }); // Display backend error message
+      } else {
+          toast.error("Failed to increase quantity", { position: "top-center" }); // Generic error
+      }
+  }
   };
 
   const handleDecreaseQuantity = async (productId: string) => {
-    await decreaseQuantityMutation({ productId: productId, email: user?.email });
+   try {
+    const res = await decreaseQuantityMutation({ productId: productId, email: user?.email });
+    toast.success(res.data.message, { position: "top-center" });
+   } catch (err:any) {
+    if (err?.data?.message) {
+      toast.error(err.data.message, { position: "top-center" }); // Display backend error message
+  } else {
+      toast.error("Failed to increase quantity", { position: "top-center" }); // Generic error
+  }
+   }
   };
 
   const handleRemoveItem = async (productId: string) => {
-    await removeFromCartMutation({ productId: productId, email: user?.email });
+    try {
+    const res =  await removeFromCartMutation({ productId: productId, email: user?.email });
+    toast.success(res.data.message, { position: "top-center" });
+    } catch (err:any) {
+      if (err?.data?.message) {
+        toast.error(err.data.message, { position: "top-center" }); // Display backend error message
+    } else {
+        toast.error("Failed to increase quantity", { position: "top-center" }); // Generic error
+    }
+    }
   };
 
   const toastId = "cart";
@@ -61,11 +84,11 @@ const Cart = () => {
     if (isError) {
       toast.error(JSON.stringify(error), { id: toastId });
     }
-  }, [data?.data, data?.message, error, isError, isLoading, isSuccess]);
+  }, [data?.data, data?.message, error, isError, isLoading, isSuccess, user?.email, clearCartMutation]);
 
   // Calculate total quantity and total price
-  const totalQuantity = cartData?.data?.items.reduce((total, item) => total + item.quantity, 0) || 0;
-  const totalPrice = cartData?.data?.items.reduce((total, item) => total + (item.product.price * item.quantity), 0) || 0;
+  const totalQuantity = cartData?.data?.items.reduce((total: number, item: { product: { _id: string; price: number; name: string }; quantity: number }) => total + item.quantity, 0) || 0;
+  const totalPrice = cartData?.data?.items.reduce((total: number, item: { product: { _id: string; price: number; name: string }; quantity: number }) => total + (item.product.price * item.quantity), 0) || 0;
 
   return (
     <div className="container mx-auto p-6">
@@ -85,7 +108,7 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {cartData?.data?.items.map((item) => (
+            {cartData?.data?.items.map((item:any) => (
               <tr key={item._id} className="border-b">
                 <td className="border p-2">{item.product.name}</td>
                 <td className="border p-2">${item.product.price?.toFixed(2) || '0.00'}</td>

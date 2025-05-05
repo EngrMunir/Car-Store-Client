@@ -36,8 +36,8 @@ const Details = () => {
             <div className="w-2/3 p-4 md:p-4">
                 <h1 className="text-xl font-bold text-gray-800 dark:text-white">{car?.data.brand}</h1>
 
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400"><span className="font-semibold">Model</span>: {car.data.model}</p>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400"><span className="font-semibold">Category</span>: {car.data.category}</p>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400"><span className="font-semibold">Model</span>: {car?.data.model}</p>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400"><span className="font-semibold">Category</span>: {car?.data.category}</p>
 
                 <div className="flex justify-between mt-3 item-center">
                     <h1 className="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">${car?.data.price}</h1>

@@ -1,7 +1,7 @@
 
 import { baseApi } from "../../api/baseApi";
 
-const courseManagementApi = baseApi.injectEndpoints({
+const carManagementApi = baseApi.injectEndpoints({
 
     endpoints:(builder)=>({
         getAllCars: builder.query({
@@ -19,7 +19,7 @@ const courseManagementApi = baseApi.injectEndpoints({
       
               return { url: `/cars?${params.toString()}`, method: "GET" };
             },
-            transformResponse: (response) => ({
+            transformResponse: (response:any) => ({
               data: response.data,
             }),
           }),
@@ -30,8 +30,7 @@ const courseManagementApi = baseApi.injectEndpoints({
                     method:'GET',
                 }
                 },
-                transformResponse:(response)=>{
-                    console.log( response?.data);
+                transformResponse:(response:any)=>{
                     return {
                         data: response.data,
                     };
@@ -58,4 +57,4 @@ export const {
     useGetSingleCarQuery,
     useAddCarMutation,
     useDeleteCarMutation,
-} = courseManagementApi;
+} = carManagementApi;

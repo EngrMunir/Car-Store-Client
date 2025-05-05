@@ -4,11 +4,11 @@ import { RootState } from "../features/store";
 // import { PersistPartial } from "redux-persist/es/persistReducer";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl:'http://localhost:5000/api',
+    baseUrl:'https://car-store-backend-teal.vercel.app/api',
     credentials:"include",
     prepareHeaders:(headers, {getState})=>{
         const token =  (getState() as RootState).auth?.token;
-        console.log('token from redux',token);
+        // console.log('token from redux',token);
         if(token){
             headers.set("authorization",`Bearer ${token}`);
         }

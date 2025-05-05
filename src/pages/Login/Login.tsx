@@ -29,6 +29,7 @@ const Login = () => {
             dispatch(setUser({ user, token: res.data.accessToken }));
             toast.success("Logged in", { id: toastId, duration: 2000, position:'top-center' });
             navigate("/");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             toast.error("Something went wrong", { id: toastId, duration: 2000 });
         }

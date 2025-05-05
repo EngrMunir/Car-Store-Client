@@ -3,7 +3,7 @@ import { useState } from "react";
 interface EditProductModalProps {
   isOpen: boolean;
   onClose: () => void;
-  product: { id: string; name: string; price: number; stock: number };
+  product: any;
   onUpdate: (updatedProduct: { id: string; name: string; price: number; stock: number }) => void;
 }
 

@@ -11,7 +11,7 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 const Sidebar = () => {
     const user = useAppSelector(selectCurrentUser);
-    console.log(user);
+    // console.log(user);
     return (
         <div className="w-64 min-h-screen p-5">
             <h2 className="text-xl font-bold mb-4">Dashboard</h2>

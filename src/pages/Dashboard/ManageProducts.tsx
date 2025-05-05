@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDeleteCarMutation, useGetAllCarsQuery } from "@/redux/features/Car/carManagementApi";
 import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -5,17 +6,26 @@ import Swal from "sweetalert2";
 import AddProductModal from "./AddProductModal";
 import EditProductModal from "./EditProductModal";
 
+
+interface Car {
+    _id: string;
+    brand: string;
+    category: string;
+    price: number;
+    quantity: number;
+}
+
 const ManageProducts = () => {
-    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState();
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const { data } = useGetAllCarsQuery(undefined);
     const [deleteProduct] = useDeleteCarMutation();
-    
-    const products = data?.data || [];
-    console.log(products)
 
-    const handleDelete = (productId) => {
+    const products: Car[] = data?.data || [];
+    console.log(products);
+
+    const handleDelete = (productId: string) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -44,7 +54,7 @@ const ManageProducts = () => {
                 <h2 className="text-2xl font-bold">Manage Products</h2>
                 <button onClick={() => setIsAddModalOpen(true)} className="bg-blue-500 text-white px-4 py-2 rounded">Add Product</button>
             </div>
-            
+
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
                     <thead className="bg-gray-100">
@@ -58,7 +68,7 @@ const ManageProducts = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product, index) => (
+                        {products.map((product:any, index: number) => (
                             <tr key={product._id} className="border-t">
                                 <td className="p-2 border">{index + 1}</td>
                                 <td className="p-2 border">{product.brand}</td>
@@ -78,9 +88,9 @@ const ManageProducts = () => {
                     </tbody>
                 </table>
             </div>
-            
-            {isAddModalOpen && <AddProductModal onClose={() => setIsAddModalOpen(false)} />}
-            {isEditModalOpen && <EditProductModal product={selectedProduct} onClose={() => setIsEditModalOpen(false)} />}
+
+            {isAddModalOpen && <AddProductModal onClose={() => setIsAddModalOpen(false)} isOpen={isAddModalOpen} onAdd={()=>{setIsAddModalOpen(false)}}/>}
+            {isEditModalOpen && <EditProductModal product={selectedProduct} isOpen={isEditModalOpen} onUpdate={()=>{setIsEditModalOpen(false)}} onClose={() => setIsEditModalOpen(false)} />}
         </div>
     );
 };

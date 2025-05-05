@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAddCarMutation } from '@/redux/features/Car/carManagementApi';
 import { toast } from 'sonner';
@@ -7,16 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectTrigger, SelectValue, SelectItem, SelectContent } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddCarForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, control } = useForm();
     const [addCarMutation] = useAddCarMutation();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data:any) => {
+        
         const imageFile = new FormData();
         imageFile.append("image", data.image[0]);
         
@@ -25,6 +25,7 @@ const AddCarForm = () => {
         });
         
         if (res.data.success) {
+            
             const carInfo = {
                 ...data,
                 year: Number(data.year),
@@ -34,6 +35,7 @@ const AddCarForm = () => {
             };
             
             const res1 = await addCarMutation(carInfo);
+            console.log('add car',res1);
             if (res1.data.success) {
                 toast.success("Car added successfully", { duration: 1000 });
             }
@@ -76,19 +78,26 @@ const AddCarForm = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     <div>
                         <Label>Category</Label>
-                        <Select {...register('category', { required: true })}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Category" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="Sedan">Sedan</SelectItem>
-                                <SelectItem value="SUV">SUV</SelectItem>
-                                <SelectItem value="Truck">Truck</SelectItem>
-                                <SelectItem value="Coupe">Coupe</SelectItem>
-                                <SelectItem value="Convertible">Convertible</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        {errors.category && <p className="text-red-500 text-sm">Category is required</p>}
+                        <Controller
+    name="category"
+    control={control}
+    rules={{ required: "Category is required" }}
+    render={({ field }) => (
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <SelectTrigger>
+                <SelectValue placeholder="Select Category" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="Sedan">Sedan</SelectItem>
+                <SelectItem value="SUV">SUV</SelectItem>
+                <SelectItem value="Truck">Truck</SelectItem>
+                <SelectItem value="Coupe">Coupe</SelectItem>
+                <SelectItem value="Convertible">Convertible</SelectItem>
+            </SelectContent>
+        </Select>
+    )}
+/>
+{errors.category && <p className="text-red-500 text-sm">Category is required</p>}
                     </div>
                     <div>
                         <Label>Quantity</Label>
@@ -105,7 +114,7 @@ const AddCarForm = () => {
                         {errors.image && <p className="text-red-500 text-sm">Image is required</p>}
                     </div>
                     <div className='flex items-center gap-2'>
-                        <Checkbox {...register('inStock')} defaultChecked />
+                        <input {...register('inStock')} type='checkbox'  />
                         <Label>In Stock</Label>
                     </div>
                 </div>

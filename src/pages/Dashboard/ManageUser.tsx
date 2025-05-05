@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FaTrash } from "react-icons/fa";
-import { useState } from "react";
 import Swal from 'sweetalert2';
 import { useChangeUserRoleMutation, useDeleteUsersMutation, useGetUsersQuery } from '@/redux/features/User/userManagementApi';
 
 const ManageUsers = () => {
-    const [filterRole, setFilterRole] = useState("");
     const { data } = useGetUsersQuery(undefined);
     const [deleteUser] = useDeleteUsersMutation();
     const [changeRole] = useChangeUserRoleMutation();
@@ -76,7 +75,7 @@ const ManageUsers = () => {
                 
                 {/* Table Body */}
                 <tbody>
-                    {users.map((user, index) => (
+                    {users.map((user:any, index:number) => (
                         <tr key={user._id} className="hover:bg-gray-100">
                             <td className="py-3 px-4 border text-center">{index + 1}</td>
                             <td className="py-3 px-4 border">{user.name}</td>

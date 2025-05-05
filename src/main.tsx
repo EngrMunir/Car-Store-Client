@@ -14,7 +14,8 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <div  className='max-w-6xl mx-auto'>
+    {/* <div  className='max-w-6xl mx-auto'> */}
+    <div  className='mx-auto'>
    <HelmetProvider>
    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

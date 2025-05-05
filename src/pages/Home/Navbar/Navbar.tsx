@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CiSearch } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
 import { MdMenu } from "react-icons/md";
@@ -24,7 +25,7 @@ const Navbar = () => {
         });
     };
 
-    const cartItemCount = cartData?.data?.items?.reduce((total, item) => total + item.quantity, 0) || 0;
+    const cartItemCount = cartData?.data?.items?.reduce((total: number, item: { product: any; quantity: number }) => total + item.quantity, 0) || 0;
 
     return (
         <>
