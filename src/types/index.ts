@@ -13,3 +13,18 @@ export type TCar = {
     updatedAt: string; 
     __v: number;
   };  
+
+  export type TCarData = {
+    _id: string;
+    brand: string;
+    category: string;
+    createdAt: string;
+    description: string;
+    image: string;
+    inStock: boolean;
+    model: string;
+    price: number;
+    quantity: number;
+    updatedAt: string;
+    year: number;
+  };

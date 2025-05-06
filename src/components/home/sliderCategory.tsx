@@ -8,28 +8,15 @@ import { EffectFade, Navigation } from "swiper/modules";
 // import { productType } from "@/types/productType";
 import { Link } from "react-router-dom";
 import { homeCategoryData } from "./homeCategoryData";
+import { TCarData } from "@/types";
 
-type CarData = {
-    _id: string;
-    brand: string;
-    category: string;
-    createdAt: string;
-    description: string;
-    image: string;
-    inStock: boolean;
-    model: string;
-    price: number;
-    quantity: number;
-    updatedAt: string;
-    year: number;
-  };
   
 //   type SliderCategoryProps = {
 //     data: CarData[];
 //   };
   
 
-const SliderCategory = ({ data }: { data: { data: CarData[] } }) => {
+const SliderCategory = ({ data }: { data: { data: TCarData[] } }) => {
     console.log('slider category',data.data)
     if (!data || data.length === 0) {
         return <p className="text-center mt-8">No categories to show</p>;
@@ -50,7 +37,7 @@ const SliderCategory = ({ data }: { data: { data: CarData[] } }) => {
                     </div>
                     <div className="3xl:mx-12 mx-10 grid grid-cols-3 gap-4 3xl:mb-10 mb-8">
                         {
-                            data.data.slice(0, 3).map(({ inStock, _id, price, image, brand }) =>
+                            data?.data.slice(0, 3).map(({ inStock, _id, price, image, brand }) =>
                                 <ProductCard key={_id} inStock={inStock} id={_id} brand={brand} image={image} price={price} totalRating={4.7} totalSold={420} />
                             )
                         }
