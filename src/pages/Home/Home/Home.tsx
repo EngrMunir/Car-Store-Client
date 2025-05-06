@@ -7,6 +7,7 @@ import { useGetAllCarsQuery } from "@/redux/features/Car/carManagementApi";
 import TodayDeals from "@/components/home/todayDeals";
 import { TCarData } from "@/types";
 import CompanyFeatures from "@/components/home/companyFeatures";
+import Newsletter from "@/components/home/newsLetter";
 
 const Home = () => {
     const {data: carsData, isLoading } = useGetAllCarsQuery({});
@@ -16,12 +17,13 @@ const Home = () => {
     // console.log('home', carsData);
     return (
        <>
-        <div className="mb-10">
+        <div>
             <Banner/>
             <Featured/>
             <TodayDeals data={carsData}/>
             <SliderCategory data={carsData}/>
             <CompanyFeatures/>
+            <Newsletter/>
             <FAQ/>
             <Footer/>
         </div>

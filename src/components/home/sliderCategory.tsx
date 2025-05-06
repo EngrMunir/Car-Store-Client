@@ -22,7 +22,7 @@ const SliderCategory = ({ data }: { data: { data: TCarData[] } }) => {
         return <p className="text-center mt-8">No categories to show</p>;
       }
     return (
-        <section className="container mt-8 mb-20">
+        <section className="container mt-8">
             <h2 className="text-center font-bold text-[32px]">Shop by brand</h2>
             <div className="grid grid-cols-2 gap-[35px] mt-6">
                 <div className="bg-[#1B5F48] 3xl:h-[687px] h-[536px] flex flex-col justify-between">

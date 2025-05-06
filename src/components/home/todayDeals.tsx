@@ -103,7 +103,8 @@ interface CardPropsType {
   price: number,
   image: string,
   brand: string,
-  discountPercentageShow: boolean
+  discountPercentageShow: boolean,
+  inStock:boolean,
 }
 const Card = ({_id, price, image,inStock, brand, discountPercentageShow }: CardPropsType) => {
 //   const calculatePrice = calculateDiscountPrice(unit_price, discount)
