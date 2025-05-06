@@ -12,17 +12,16 @@ const Featured = () => {
     }
 
     return (
-         <div>
+         <div className="container">
             <h2 className="text-4xl font-extrabold text-center relative uppercase tracking-wide">
             <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
                 Featured Products
             </span>
             <div className="w-24 h-1 bg-orange-500 mx-auto mt-2 rounded"></div>
         </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                 {
-                    carsData?.data.slice(0,6).map((item:TCar)=><ProductCard key={item._id} car={item}></ProductCard>)
+                    carsData?.data.slice(0,8).map((item:TCar)=><ProductCard key={item._id} car={item}></ProductCard>)
                 }
             </div>
             <div className="text-center mt-5">

@@ -30,7 +30,7 @@ const Navbar = () => {
     return (
         <>
             <nav>
-                <div className="w-full flex justify-between items-center py-8">
+                <div className="w-full flex justify-between items-center py-8 container">
                     {/* logo section */}
                     <div className="text-2xl flex items-center gap-2 font-bold uppercase">
                         <FaDumbbell />

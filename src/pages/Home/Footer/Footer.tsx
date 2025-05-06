@@ -1,6 +1,5 @@
 // import { FaCar, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
-import { Link } from "react-router-dom";
 
 // const Footer = () => {
 //   return (
@@ -100,7 +99,7 @@ import { Link } from "react-router-dom";
 
 // import { Link } from "react-router-dom"
 
-
+import { Link } from "react-router-dom";
 
 const languages = [
     { name: "Russian", url: "#" },
@@ -146,7 +145,7 @@ const ZMACGroup = [
     { name: "Tmall", url: "#" },
     { name: "Taobao Global", url: "#" },
     { name: "CarShopOS", url: "#" },
-    { name: "1688", url: "#" }
+    { name: "2024", url: "#" }
 ];
 
 const Footer = () => {
