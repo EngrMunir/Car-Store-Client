@@ -14,7 +14,7 @@ import { toast } from "sonner";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [login] = useLoginMutation();
 
     const onSubmit = async (data: FieldValues) => {
@@ -35,12 +35,25 @@ const Login = () => {
         }
     };
 
+    const handleAdminClick =()=>{
+        setValue("email","munir@gmail.com")
+        setValue("password", 'admin123')
+    }
+    const handleUserClick =()=>{
+        setValue("email", 'user@gmail.com')
+        setValue("password","user123")
+    }
+
     return (
         <div className="flex justify-center items-center min-h-screen">
             <Card className="w-full max-w-md shadow-lg">
                 <CardHeader>
                     <CardTitle className="text-center text-2xl">Login</CardTitle>
                 </CardHeader>
+               <div className="flex justify-around mb-2 px-6">
+                    <Button onClick={handleAdminClick} variant="outline">Admin</Button>
+                    <Button onClick={handleUserClick} variant="outline">User</Button>
+               </div>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div>

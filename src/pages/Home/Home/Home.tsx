@@ -5,7 +5,6 @@ import Featured from "../Featured/Featured";
 import Footer from "../Footer/Footer";
 import { useGetAllCarsQuery } from "@/redux/features/Car/carManagementApi";
 import TodayDeals from "@/components/home/todayDeals";
-import { TCarData } from "@/types";
 import CompanyFeatures from "@/components/home/companyFeatures";
 import Newsletter from "@/components/home/newsLetter";
 
