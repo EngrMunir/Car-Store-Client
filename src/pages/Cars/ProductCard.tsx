@@ -1,59 +1,69 @@
+
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAddToCartMutation } from "@/redux/features/Cart/CartApi";
 import { useAppSelector } from "@/redux/features/hook";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-type CarProps ={
-    car:{
-        _id:string;
-        brand:string;
-        price:number;
-        image:string;
-    }
-}
+type CarProps = {
+  car: {
+    _id: string;
+    brand: string;
+    price: number;
+    image: string;
+  };
+};
 
-const ProductCard = ({car}:CarProps) => {
-    const user = useAppSelector(selectCurrentUser);
-    const [addToCartMutation] = useAddToCartMutation();
+const ProductCard = ({ car }: CarProps) => {
+  const user = useAppSelector(selectCurrentUser);
+  const [addToCartMutation] = useAddToCartMutation();
 
-    const handleAddToCart = async() => {        
-      try {
-        await addToCartMutation({ email: user?.email, productId: car._id }).unwrap();
-        toast.success("Product added to cart", { position: "top-center" });
+  const handleAddToCart = async () => {
+    try {
+      await addToCartMutation({ email: user?.email, productId: car._id }).unwrap();
+      toast.success("Product added to cart", { position: "top-center" });
     } catch (err: any) {
-        if (err?.data?.message) {
-            toast.error(err.data.message, { position: "top-center" }); // Display backend error message
-        } else {
-            toast.error("Failed to add to cart", { position: "top-center" }); // Generic error
-        }
+      if (err?.data?.message) {
+        toast.error(err.data.message, { position: "top-center" });
+      } else {
+        toast.error("Failed to add to cart", { position: "top-center" });
+      }
     }
-      };
-    return (
-        <div>
-            <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto mt-5">
-            <div className="w-full h-64 bg-gray-300 bg-center bg-cover rounded-lg shadow-md" style={{backgroundImage: `url(${car.image})`}}></div>
+  };
 
-            <div className="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-                <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">{car.brand}</h3>
-                <div className="flex items-center justify-between px-3 py-2 bg-gray-200 dark:bg-gray-700">
-                    <span className="font-bold text-gray-800 dark:text-gray-200">${car.price}</span>
-                    <button
-                    onClick={handleAddToCart} 
-                    className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-[#fb923c] rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">Add to cart</button>
-                </div>
-            </div>
-        </div>
-        <div>
-        <Link to={`/details/${car._id}`}>
-        <button className="btn mt-2 w-full bg-[#fb923c] text-white hover:bg-[#0864b9]">
-          See Details
-        </button>
-      </Link>
-        </div>
+  return (
+    <div className="w-full max-w-[300px] h-[420px] flex flex-col rounded-xl shadow-md overflow-hidden bg-white mx-auto hover:shadow-2xl transition-shadow duration-300">
+      {/* Car Image */}
+      <div
+        className="h-[200px] bg-center bg-cover"
+        style={{ backgroundImage: `url(${car.image})` }}
+      />
+
+      {/* Car Info */}
+      <div className="flex flex-col justify-between flex-grow p-4">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-gray-800">{car.brand}</h3>
+          <p className="text-xl font-bold text-blue-600 mt-2">${car.price}</p>
         </div>
 
-    );
+        {/* Buttons */}
+        <div className="mt-4 space-y-2">
+          <button
+            onClick={handleAddToCart}
+            className="w-full py-2 text-sm font-semibold text-white bg-orange-400 rounded hover:bg-orange-500 transition duration-300"
+          >
+            Add to Cart
+          </button>
+
+          <Link to={`/details/${car._id}`}>
+            <button className="w-full py-2 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition duration-300">
+              See Details
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ProductCard;

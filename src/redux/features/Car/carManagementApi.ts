@@ -5,7 +5,7 @@ const carManagementApi = baseApi.injectEndpoints({
 
     endpoints:(builder)=>({
         getAllCars: builder.query({
-            query: ({ search, brand, category, model, priceMin, priceMax, sortBy, sortOrder }) => {
+            query: ({ search, brand, category, model, priceMin, priceMax, sortBy, sortOrder, page, limit }) => {
               const params = new URLSearchParams();
               
               if (search) params.append("search", search);
@@ -16,6 +16,8 @@ const carManagementApi = baseApi.injectEndpoints({
               if (priceMax) params.append("priceMax", priceMax);
               if (sortBy) params.append("sortBy", sortBy);
               if (sortOrder) params.append("sortOrder", sortOrder);
+              if (page) params.append("page", page);
+              if (limit) params.append("limit", limit);
       
               return { url: `/cars?${params.toString()}`, method: "GET" };
             },

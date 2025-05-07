@@ -31,6 +31,7 @@ const AddCarForm = () => {
                 year: Number(data.year),
                 price: Number(data.price),
                 quantity: Number(data.quantity),
+                discount:Number(data.discount),
                 image: res.data.data.display_url
             };
             
@@ -49,12 +50,12 @@ const AddCarForm = () => {
                 {/* Brand & Model */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     <div>
-                        <Label>Brand</Label>
+                        <Label>Brand*</Label>
                         <Input type="text" {...register('brand', { required: true })} placeholder='Car Brand' />
                         {errors.brand && <p className="text-red-500 text-sm">Brand is required</p>}
                     </div>
                     <div>
-                        <Label>Model</Label>
+                        <Label>Model*</Label>
                         <Input type="text" {...register('model', { required: true })} placeholder='Car Model' />
                         {errors.model && <p className="text-red-500 text-sm">Model is required</p>}
                     </div>
@@ -63,12 +64,12 @@ const AddCarForm = () => {
                 {/* Year & Price */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     <div>
-                        <Label>Year</Label>
+                        <Label>Year*</Label>
                         <Input type="number" {...register('year', { required: true, min: 1994 })} placeholder='Manufacturing Year' />
                         {errors.year && <p className="text-red-500 text-sm">Year is required (Min: 1994)</p>}
                     </div>
                     <div>
-                        <Label>Price ($)</Label>
+                        <Label>Price($)*</Label>
                         <Input type="number" {...register('price', { required: true, min: 0 })} placeholder='Price' />
                         {errors.price && <p className="text-red-500 text-sm">Price is required</p>}
                     </div>
@@ -77,30 +78,30 @@ const AddCarForm = () => {
                 {/* Category & Quantity */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     <div>
-                        <Label>Category</Label>
+                        <Label>Category*</Label>
                         <Controller
-    name="category"
-    control={control}
-    rules={{ required: "Category is required" }}
-    render={({ field }) => (
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <SelectTrigger>
-                <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="Sedan">Sedan</SelectItem>
-                <SelectItem value="SUV">SUV</SelectItem>
-                <SelectItem value="Truck">Truck</SelectItem>
-                <SelectItem value="Coupe">Coupe</SelectItem>
-                <SelectItem value="Convertible">Convertible</SelectItem>
-            </SelectContent>
-        </Select>
-    )}
-/>
-{errors.category && <p className="text-red-500 text-sm">Category is required</p>}
+                            name="category"
+                            control={control}
+                            rules={{ required: "Category is required" }}
+                            render={({ field }) => (
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Sedan">Sedan</SelectItem>
+                                        <SelectItem value="SUV">SUV</SelectItem>
+                                        <SelectItem value="Truck">Truck</SelectItem>
+                                        <SelectItem value="Coupe">Coupe</SelectItem>
+                                        <SelectItem value="Convertible">Convertible</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            )}
+                        />
+                        {errors.category && <p className="text-red-500 text-sm">Category is required</p>}
                     </div>
                     <div>
-                        <Label>Quantity</Label>
+                        <Label>Quantity*</Label>
                         <Input type="number" {...register('quantity', { required: true, min: 0 })} placeholder='Quantity' />
                         {errors.quantity && <p className="text-red-500 text-sm">Quantity is required</p>}
                     </div>
@@ -109,21 +110,27 @@ const AddCarForm = () => {
                 {/* Image & In Stock */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     <div>
-                        <Label>Image</Label>
+                        <Label>Image*</Label>
                         <Input type="file" {...register('image', { required: true })} />
                         {errors.image && <p className="text-red-500 text-sm">Image is required</p>}
                     </div>
                     <div className='flex items-center gap-2'>
                         <input {...register('inStock')} type='checkbox'  />
-                        <Label>In Stock</Label>
+                        <Label>In Stock*</Label>
                     </div>
                 </div>
                 
-                {/* Description */}
-                <div>
-                    <Label>Description</Label>
-                    <Textarea {...register('description', { required: true })} placeholder='Car Description' />
-                    {errors.description && <p className="text-red-500 text-sm">Description is required</p>}
+                {/* Description and discount */}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                        <Label>Description*</Label>
+                        <Textarea {...register('description', { required: true })} placeholder='Car Description' />
+                        {errors.description && <p className="text-red-500 text-sm">Description is required</p>}
+                    </div>
+                    <div>
+                        <Label>Discount (%)</Label>
+                        <Input type="number" {...register('discount')} placeholder='Discount' />
+                    </div>
                 </div>
                 
                 {/* Submit Button */}
