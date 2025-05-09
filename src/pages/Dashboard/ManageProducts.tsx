@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import AddProductModal from "./AddProductModal";
 import EditProductModal from "./EditProductModal";
 
-
 interface Car {
     _id: string;
     brand: string;
@@ -16,14 +15,21 @@ interface Car {
 }
 
 const ManageProducts = () => {
-    const [selectedProduct, setSelectedProduct] = useState();
+    const [selectedProduct, setSelectedProduct] = useState<Car | null>(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 5;
+
     const { data } = useGetAllCarsQuery({});
     const [deleteProduct] = useDeleteCarMutation();
-
     const products: Car[] = data?.data || [];
-    
+
+    // Pagination logic
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(products.length / productsPerPage);
 
     const handleDelete = (productId: string) => {
         Swal.fire({
@@ -68,9 +74,9 @@ const ManageProducts = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product:any, index: number) => (
+                        {currentProducts.map((product, index) => (
                             <tr key={product._id} className="border-t">
-                                <td className="p-2 border">{index + 1}</td>
+                                <td className="p-2 border">{indexOfFirstProduct + index + 1}</td>
                                 <td className="p-2 border">{product.brand}</td>
                                 <td className="p-2 border">{product.category}</td>
                                 <td className="p-2 border">${product.price}</td>
@@ -89,8 +95,41 @@ const ManageProducts = () => {
                 </table>
             </div>
 
-            {isAddModalOpen && <AddProductModal onClose={() => setIsAddModalOpen(false)} isOpen={isAddModalOpen} onAdd={()=>{setIsAddModalOpen(false)}}/>}
-            {isEditModalOpen && <EditProductModal product={selectedProduct} isOpen={isEditModalOpen} onUpdate={()=>{setIsEditModalOpen(false)}} onClose={() => setIsEditModalOpen(false)} />}
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-4 gap-2">
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`px-3 py-1 rounded ${currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
+
+            {/* Modals */}
+            {isAddModalOpen && (
+                <AddProductModal
+                    onClose={() => setIsAddModalOpen(false)}
+                    isOpen={isAddModalOpen}
+                    onAdd={() => {
+                        setIsAddModalOpen(false);
+                        setCurrentPage(1); // Optional: Reset to first page on add
+                    }}
+                />
+            )}
+            {isEditModalOpen && selectedProduct && (
+                <EditProductModal
+                    product={selectedProduct}
+                    isOpen={isEditModalOpen}
+                    onUpdate={() => {
+                        setIsEditModalOpen(false);
+                        setCurrentPage(1); // Optional: Reset to first page on edit
+                    }}
+                    onClose={() => setIsEditModalOpen(false)}
+                />
+            )}
         </div>
     );
 };

@@ -2,15 +2,23 @@
 import { FaTrash } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useChangeUserRoleMutation, useDeleteUsersMutation, useGetUsersQuery } from '@/redux/features/User/userManagementApi';
+import { useState } from "react";
 
 const ManageUsers = () => {
     const { data } = useGetUsersQuery({});
     const [deleteUser] = useDeleteUsersMutation();
     const [changeRole] = useChangeUserRoleMutation();
- 
+
     const users = data?.data || [];
 
-    console.log(users)
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 5;
+    const totalPages = Math.ceil(users.length / usersPerPage);
+
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
     const handleRole = async (userId: string, newRole: string) => {
         const info = { id: userId, role: newRole };
@@ -64,7 +72,6 @@ const ManageUsers = () => {
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Manage Users</h2>
 
             <table className="w-full border-collapse rounded-lg overflow-hidden">
-                {/* Table Header */}
                 <thead className="bg-gray-100 text-gray-700">
                     <tr>
                         <th className="py-3 px-4 border">#</th>
@@ -74,17 +81,15 @@ const ManageUsers = () => {
                         <th className="py-3 px-4 border">Action</th>
                     </tr>
                 </thead>
-                
-                {/* Table Body */}
                 <tbody>
-                    {users.map((user:any, index:number) => (
+                    {currentUsers.map((user: any, index: number) => (
                         <tr key={user._id} className="hover:bg-gray-100">
-                            <td className="py-3 px-4 border text-center">{index + 1}</td>
+                            <td className="py-3 px-4 border text-center">{indexOfFirstUser + index + 1}</td>
                             <td className="py-3 px-4 border">{user.name}</td>
                             <td className="py-3 px-4 border">{user.email}</td>
                             <td className="py-3 px-4 border">
-                                <select 
-                                    defaultValue={user.role} 
+                                <select
+                                    defaultValue={user.role}
                                     onChange={(e) => handleRole(user._id, e.target.value)}
                                     className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
@@ -93,7 +98,7 @@ const ManageUsers = () => {
                                 </select>
                             </td>
                             <td className="py-3 px-4 border text-center">
-                                <button 
+                                <button
                                     onClick={() => handleDelete(user._id)}
                                     className="text-red-500 hover:text-red-700 transition-all"
                                 >
@@ -104,6 +109,19 @@ const ManageUsers = () => {
                     ))}
                 </tbody>
             </table>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-4 gap-2">
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`px-3 py-1 rounded ${currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };
