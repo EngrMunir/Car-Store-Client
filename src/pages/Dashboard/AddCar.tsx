@@ -135,7 +135,7 @@ const AddCarForm = () => {
                 
                 {/* Submit Button */}
                 <div className='text-center'>
-                    <Button type="submit" className="w-full">Add Car</Button>
+                    <Button type="submit" className="w-full bg-blue-600">Add Car</Button>
                 </div>
             </form>
         </div>

@@ -4,6 +4,12 @@
 
 /* ... */
 
+:root {
+  --color-chrome: #4caf50;
+  --color-safari: #2196f3;
+  --color-firefox: #ff9800;
+  --color-edge: #9c27b0;
+}
 
 
 @layer base {

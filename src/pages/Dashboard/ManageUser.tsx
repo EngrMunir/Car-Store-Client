@@ -4,11 +4,13 @@ import Swal from 'sweetalert2';
 import { useChangeUserRoleMutation, useDeleteUsersMutation, useGetUsersQuery } from '@/redux/features/User/userManagementApi';
 
 const ManageUsers = () => {
-    const { data } = useGetUsersQuery(undefined);
+    const { data } = useGetUsersQuery({});
     const [deleteUser] = useDeleteUsersMutation();
     const [changeRole] = useChangeUserRoleMutation();
  
     const users = data?.data || [];
+
+    console.log(users)
 
     const handleRole = async (userId: string, newRole: string) => {
         const info = { id: userId, role: newRole };

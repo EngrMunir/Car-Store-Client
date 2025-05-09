@@ -4,7 +4,7 @@ export const userManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query:()=>{
-        return { url:'/auth/users', method:'GET' }
+        return { url:'/users', method:'GET' }
       },
       providesTags:['users']
     }),

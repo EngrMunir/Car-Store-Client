@@ -5,15 +5,13 @@ import { RiBook2Line } from "react-icons/ri";
 import { SiMagento } from "react-icons/si";
 
 
-
-
 const About = () => {
     return (
-        <div className="">
+        <div className="mt-5 container">
             {/* history and features */}
            <div className="flex justify-stretch gap-2 mb-8 px-6 mx-auto">
                 <div className="w-1/2">
-                    <p className="relative before:block before:w-2 before:h-2 before:bg-[#ff8901] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-[#ff8901]">History</p>
+                    <p className="relative before:block before:w-2 before:h-2 before:bg-blue-600 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-blue-600">History</p>
                     <p className="text-3xl uppercase mb-8">The Company</p>
                     <Accordion type="single" collapsible className="border-2 p-3">
                         <AccordionItem value="item-1">
@@ -44,7 +42,7 @@ const About = () => {
 
                 </div>
                 <div>
-                    <p className="relative before:block before:w-2 before:h-2 before:bg-[#ff8901] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-[#ff8901]">WE ARE GOOD</p>
+                    <p className="relative before:block before:w-2 before:h-2 before:bg-blue-600 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-blue-600">WE ARE GOOD</p>
                     <p className="text-3xl uppercase mb-8">Our Features</p>
                     <div>
                         <div className="flex gap-2">
@@ -78,12 +76,12 @@ const About = () => {
            <div className="bg-slate-100 mb-8">
             <div className="mb-8 pt-8">
                 <div  className="px-6 mx-auto">
-                <p className="relative before:block before:w-2 before:h-2 before:bg-[#ff8901] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-[#ff8901] ">In the news</p>
+                <p className="relative before:block before:w-2 before:h-2 before:bg-blue-600 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-blue-600 ">In the news</p>
                 <p className="text-3xl uppercase mb-8">Latest news</p>
                 </div>          
                 <div className="flex px-6 mx-auto">
                     <p>Car Shop is a business theme. Perfectly suited for Auto Mechanic, Car Repair Shops, Car Wash, Garages, Automobile Mechanicals, Mechanic Workshops, Auto Painting, Auto Centres.</p>
-                    <button className="uppercase bg-red-500 text-white text-nowrap px-3">Check All News</button>
+                    <button className="uppercase bg-blue-600 text-white text-nowrap px-3">Check All News</button>
                 </div>
             </div>
             <div className="flex gap-5 p-5">
@@ -125,13 +123,13 @@ const About = () => {
            <div>
             <div>
                 <div className="px-6 mx-auto">
-                <p className="relative before:block before:w-2 before:h-2 before:bg-[#ff8901] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-[#ff8901]">Creatives</p>
+                <p className="relative before:block before:w-2 before:h-2 before:bg-blue-600 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-blue-600">Creatives</p>
                 <p className="text-3xl uppercase mb-8">Our team</p>
                 </div>
                
                 <div className="flex px-6 mx-auto">
                     <p>Car Shop is a business theme. Perfectly suited for Auto Mechanic, Car Repair Shops, Car Wash, Garages, Automobile Mechanicals, Mechanic Workshops, Auto Painting, Auto Centres.</p>
-                    <button className="uppercase bg-red-500 text-white text-nowrap px-3">Check All News</button>
+                    <button className="uppercase bg-blue-600 text-white text-nowrap px-3">Check All News</button>
                 </div>
                 <section className="bg-white dark:bg-gray-900">
     <div className="container px-6 py-10 mx-auto animate-pulse">
@@ -176,12 +174,12 @@ const About = () => {
            <div className="bg-slate-100">
             <div className="pt-5 ">
                 <div className="px-6 mx-auto">
-                <p className="relative before:block before:w-2 before:h-2 before:bg-[#ff8901] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-[#ff8901]">People Say</p>
+                <p className="relative before:block before:w-2 before:h-2 before:bg-blue-600 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 pl-4 text-blue-600">People Say</p>
                 <p className="text-3xl uppercase mb-8">Testimonials</p>
                 </div>
                 <div className="flex px-6 mx-auto">
                     <p>Car Shop is a business theme. Perfectly suited for Auto Mechanic, Car Repair Shops, Car Wash, Garages, Automobile Mechanicals, Mechanic Workshops, Auto Painting, Auto Centres.</p>
-                    <button className="uppercase bg-red-500 text-white text-nowrap px-3">Check All News</button>
+                    <button className="uppercase bg-blue-600 text-white text-nowrap px-3">Check All News</button>
                 </div>
                 {/* ......... */}
                 <section className=" dark:bg-gray-900">

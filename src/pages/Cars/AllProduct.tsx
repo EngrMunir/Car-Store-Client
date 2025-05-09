@@ -34,7 +34,7 @@ const AllProduct = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 mb-5">
+    <div className="container mx-auto px-4 m-5">
       {/* <h2 className="text-3xl text-center my-6">Available Cars</h2> */}
 
       <div className="flex flex-col md:flex-row gap-6">

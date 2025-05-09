@@ -6,15 +6,16 @@ import Swal from "sweetalert2";
 
 
 const ManageOrders = () => {
-    const { data } = useGetAllOrdersQuery(undefined);
+    const { data, refetch } = useGetAllOrdersQuery({});
     const [updateOrderStatus] = useUpdateOrderStatusMutation();
     const [deleteOrder] = useDeleteOrderMutation();
     const [filterStatus, setFilterStatus] = useState("");
 
     const orders = data?.data || [];
-    console.log(orders)
+    console.log('orders',orders)
 
     const handleStatusChange = async (orderId: string, newStatus: string) => {
+        
         Swal.fire({
             title: "Are you sure?",
             text: `Change order status to ${newStatus}?`,
@@ -27,7 +28,9 @@ const ManageOrders = () => {
             if (result.isConfirmed) {
                 try {
                     const response = await updateOrderStatus({ id: orderId, status: newStatus }).unwrap();
+                    console.log('response from manage order',response)
                     if (response.success) {
+                        refetch();
                         Swal.fire("Updated!", "Order status has been changed.", "success");
                     }
                 
@@ -71,9 +74,9 @@ const ManageOrders = () => {
                     onChange={(e) => setFilterStatus(e.target.value)}
                 >
                     <option value="">All Orders</option>
-                    <option value="pending">Pending</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="delivered">Delivered</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
                 </select>
             </div>
 
@@ -95,8 +98,14 @@ const ManageOrders = () => {
                             .map((item:any, index:number) => (
                                 <tr key={item._id} className="border-t">
                                     <td className="p-2 border">{index + 1}</td>
-                                    <td className="p-2 border">{item.customerName}</td>
-                                    <td className="p-2 border">{item.productName}</td>
+                                    <td className="p-2 border">{item.user.name}</td>
+                                    <td className="p-2 border">
+                                        {item.products.map((p: any, i: number) => (
+                                            <span key={i}>
+                                            {p.product?.brand || "N/A"}
+                                            </span>
+                                        ))}
+                                    </td>
                                     <td className="p-2 border">${item.totalPrice}</td>
                                     <td className="p-2 border">
                                         <select 
@@ -104,9 +113,9 @@ const ManageOrders = () => {
                                             onChange={(e) => handleStatusChange(item._id, e.target.value)}
                                             className="border p-1 rounded"
                                         >
-                                            <option value="pending">Pending</option>
-                                            <option value="shipped">Shipped</option>
-                                            <option value="delivered">Delivered</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Shipped">Shipped</option>
+                                            <option value="Delivered">Delivered</option>
                                         </select>
                                     </td>
                                     <td className="p-2 border flex gap-2">

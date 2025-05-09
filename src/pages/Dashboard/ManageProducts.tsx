@@ -19,11 +19,11 @@ const ManageProducts = () => {
     const [selectedProduct, setSelectedProduct] = useState();
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const { data } = useGetAllCarsQuery(undefined);
+    const { data } = useGetAllCarsQuery({});
     const [deleteProduct] = useDeleteCarMutation();
 
     const products: Car[] = data?.data || [];
-    console.log(products);
+    
 
     const handleDelete = (productId: string) => {
         Swal.fire({

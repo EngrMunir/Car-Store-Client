@@ -29,7 +29,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav  className="sticky top-0 z-50 bg-white shadow">
+            <nav  className="sticky top-0 z-50 bg-blue-600 text-white shadow">
                 <div className="w-full flex justify-between items-center py-8 container">
                     {/* logo section */}
                     <div className="text-2xl flex items-center gap-2 font-bold uppercase">
@@ -44,7 +44,7 @@ const Navbar = () => {
                                 NavbarMenu.map((item) => {
                                     return (
                                         <li key={item.id}>
-                                            <a href={item.link} className="inline-block py-1 px-3 hover:text-[#ff8901] font-semibold">{item.title}</a>
+                                            <a href={item.link} className="inline-block py-1 px-3 text-white hover:text-[#ff8901] font-semibold">{item.title}</a>
                                         </li>
                                     )
                                 })

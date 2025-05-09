@@ -66,7 +66,7 @@ const Login = () => {
                             <Input type="password" id="password" {...register("password", { required: true })} />
                             {errors.password && <span className="text-red-500 text-sm">Password is required</span>}
                         </div>
-                        <Button type="submit" className="w-full">Login</Button>
+                        <Button type="submit" className="w-full bg-blue-600">Login</Button>
                     </form>
                     <p className="text-center text-sm mt-4">
                         New here? <Link className="text-blue-500" to="/register">Register</Link>

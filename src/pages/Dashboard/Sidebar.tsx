@@ -19,6 +19,7 @@ const Sidebar = () => {
                     {
                         user?.role ==='admin' && (
                             <>
+                                <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/overview" className="flex items-center gap-2"><GoPackage/><span>Overview</span></NavLink></li>
                                 <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/addCar" className="flex items-center gap-2"><GoPackage/><span>Add Products</span></NavLink></li>
                                 <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/manageProducts" className="flex items-center gap-2"><GoPackage/><span>Manage Products</span></NavLink></li>
                                 <li className="border-b-2 py-2 pl-3"><NavLink to="/dashboard/manageUsers" className="flex items-center gap-2"><FaUserCheck/> Manage Users</NavLink></li>

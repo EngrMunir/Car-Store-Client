@@ -17,7 +17,7 @@ const Featured = () => {
             <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
                 Featured Products
             </span>
-            <div className="w-24 h-1 bg-orange-500 mx-auto mt-2 rounded"></div>
+            <div className="w-24 h-1 bg-orange-500 mx-auto m-5 rounded"></div>
         </h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                 {
@@ -25,7 +25,7 @@ const Featured = () => {
                 }
             </div>
             <div className="text-center mt-5">
-                <Link to="/allProducts"><Button className="bg-[#fb923c]">View All</Button></Link>
+                <Link to="/allProducts"><Button className="bg-blue-600">View All</Button></Link>
             </div>
         </div>
     );
