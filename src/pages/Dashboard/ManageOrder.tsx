@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const ORDERS_PER_PAGE = 5;
 
 const ManageOrders = () => {
-    const { data, refetch } = useGetAllOrdersQuery({});
+    const { data, refetch, isLoading } = useGetAllOrdersQuery({});
     const [updateOrderStatus] = useUpdateOrderStatusMutation();
     const [deleteOrder] = useDeleteOrderMutation();
     const [filterStatus, setFilterStatus] = useState("");
@@ -79,6 +79,10 @@ const ManageOrders = () => {
             setCurrentPage(page);
         }
     };
+
+    if(isLoading){
+        return <p>Loading.....</p>
+    }
 
     return (
         <div className="p-6">

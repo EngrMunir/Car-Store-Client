@@ -21,7 +21,7 @@ const ManageProducts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 5;
 
-    const { data } = useGetAllCarsQuery({});
+    const { data, isLoading } = useGetAllCarsQuery({});
     const [deleteProduct] = useDeleteCarMutation();
     const products: Car[] = data?.data || [];
 
@@ -53,6 +53,10 @@ const ManageProducts = () => {
             }
         });
     };
+
+    if(isLoading){
+        return <p>Loading....</p>
+    }
 
     return (
         <div className="p-6">

@@ -30,16 +30,13 @@ const Sidebar = () => {
                     {
                         user?.role ==='user' && (
                             <>
+                                <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/myProfile" className="flex items-center gap-2"><CgProfile/> <span>My Profile</span></NavLink></li>
                                 <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/myOrders" className="flex items-center gap-2"><MdOutlineShoppingBag/><span>My Orders</span></NavLink></li>
                                 <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/trackOrders" className="flex items-center gap-2"><GrDeliver/><span>Track Orders</span></NavLink></li>
-                                <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/myProfile" className="flex items-center gap-2"><CgProfile/> <span>My Profile</span></NavLink></li>
+                                <li className="border-b-2 py-3 pl-3"><NavLink to="/dashboard/myOrderHistory" className="flex items-center gap-2"><CgProfile/> <span>My Order History</span></NavLink></li>
                             </>
                         )
                     }
-                    
-        
-                    <div className="divider py-3"></div> 
-                    <li className="pl-3"><Link to="/" className="flex items-center gap-2"><FaHome /><span>Home</span></Link> </li>
                 </ul>
             </div>
     );

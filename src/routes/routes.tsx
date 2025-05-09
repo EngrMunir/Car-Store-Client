@@ -18,6 +18,7 @@ import TrackOrder from "@/pages/Dashboard/TrackOrder";
 import MyProfile from "@/pages/Dashboard/MyProfile";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage";
 import AdminOverview from "@/pages/Dashboard/AdminOverview";
+import MyOrderHistory from "@/pages/Dashboard/MyOrderHistory";
 
 const router = createBrowserRouter([
     {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
             {
                 path:'myProfile',
                 element:<MyProfile/>
+            },
+            {
+                path:'myOrderHistory',
+                element:<MyOrderHistory/>
             }
         ]
     }

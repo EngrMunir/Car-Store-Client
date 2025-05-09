@@ -11,12 +11,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { useGetIndividualCartItemsQuery } from "@/redux/features/Cart/CartApi";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const currentUser = useSelector(selectCurrentUser);
-    const { data: cartData } = useGetIndividualCartItemsQuery(currentUser?.email);
+    const { data: cartData } = useGetIndividualCartItemsQuery(currentUser?.email, {
+  skip: !currentUser?.email,
+}); 
 
     const handleLogout = () => {
         dispatch(logout());
@@ -42,13 +54,24 @@ const Navbar = () => {
                         <ul className="flex items-center gap-6 text-gray-600">
                             {
                                 NavbarMenu.map((item) => {
-                                    return (
-                                        <li key={item.id}>
-                                            <a href={item.link} className="inline-block py-1 px-3 text-white hover:text-[#ff8901] font-semibold">{item.title}</a>
-                                        </li>
-                                    )
+                                    let link = item.link;
+                                    if (item.title === "Dashboard") {
+                                        if (currentUser?.role === "admin") {
+                                            link = "/dashboard/overview";
+                                        } else if (currentUser) {
+                                            link = "/dashboard/myProfile";
+                                        }
+                                    }
+                                return (
+                                <li key={item.id}>
+                                    <NavLink to={link} className="inline-block py-1 px-3 text-white hover:text-[#ff8901] font-semibold">
+                                    {item.title}
+                                    </NavLink>
+                                </li>
+                                );
                                 })
                             }
+
                         </ul>
                     </div>
                     {/* icon section */}
@@ -71,12 +94,29 @@ const Navbar = () => {
 
                         {/* Conditionally render Login or Logout */}
                         {currentUser ? (
-                            <button
-                                className="hover:bg-[#ff8901] font-semibold hover:text-white rounded-md border-2 border-[#ff8901] px-6 py-2 duration-200"
-                                onClick={handleLogout}
-                            >
-                                Logout
-                            </button>
+                          <>
+                           
+                            <DropdownMenu>
+                                <DropdownMenuTrigger>
+                                    <Avatar>
+                                        <AvatarImage src="https://github.com/shadcn.png" />
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <button
+                                            className="hover:bg-[#ff8901] font-semibold hover:text-white rounded-md border-2 border-[#ff8901] px-6 py-2 duration-200"
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </button>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                          </>
                         ) : (
                             <NavLink to="/login">
                                 <button className="hover:bg-[#ff8901] font-semibold hover:text-white rounded-md border-2 border-[#ff8901] px-6 py-2 duration-200 hidden md:block">

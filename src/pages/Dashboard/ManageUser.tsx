@@ -5,7 +5,7 @@ import { useChangeUserRoleMutation, useDeleteUsersMutation, useGetUsersQuery } f
 import { useState } from "react";
 
 const ManageUsers = () => {
-    const { data } = useGetUsersQuery({});
+    const { data, isLoading } = useGetUsersQuery({});
     const [deleteUser] = useDeleteUsersMutation();
     const [changeRole] = useChangeUserRoleMutation();
 
@@ -67,6 +67,9 @@ const ManageUsers = () => {
         });
     };
 
+    if(isLoading){
+        return <p>Loading....</p>
+    }
     return (
         <div className="overflow-x-auto bg-white shadow-md rounded-lg p-5">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Manage Users</h2>

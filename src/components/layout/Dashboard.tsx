@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "@/pages/Dashboard/Sidebar";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/features/hook";
+import Navbar from "@/pages/Home/Navbar/Navbar";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -19,14 +20,24 @@ const Dashboard = () => {
 
   if (loading) return <p>Loading...</p>;
     return (
-        <div className="flex">
-            {/* left side */}
-           <Sidebar/>
-            {/* right side */}
-            <div className="w-full p-5">
-                <Outlet></Outlet>
-            </div>
+        <>
+      <Navbar />
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-1 p-4">
+          <Outlet />
         </div>
+      </div>
+    </>
+
+        // <div className="flex">
+        //     {/* left side */}
+        //    <Sidebar/>
+        //     {/* right side */}
+        //     <div className="w-full p-5">
+        //         <Outlet></Outlet>
+        //     </div>
+        // </div>
     );
 };
 
