@@ -6,7 +6,6 @@ import Footer from "../Footer/Footer";
 import { useGetAllCarsQuery } from "@/redux/features/Car/carManagementApi";
 import TodayDeals from "@/components/home/todayDeals";
 import CompanyFeatures from "@/components/home/companyFeatures";
-import Newsletter from "@/components/home/newsLetter";
 
 const Home = () => {
     const {data: carsData, isLoading } = useGetAllCarsQuery({});
@@ -22,7 +21,6 @@ const Home = () => {
             <TodayDeals data={{ data: carsData?.data ?? [] }} />
             <SliderCategory data={{ data: carsData?.data ?? [] }} />
             <CompanyFeatures/>
-            <Newsletter/>
             <FAQ/>
             <Footer/>
         </div>

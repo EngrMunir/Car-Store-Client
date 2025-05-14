@@ -9,7 +9,10 @@ import { Link } from "react-router-dom";
 const TodayDeals = ({ data }: { data: { data: TCarData[] } }) => {
   return (
     <section className="container mt-8">
-      <h2 className="text-center font-bold text-[32px]">Today's deals</h2>
+      <h2 className="text-4xl font-extrabold text-center relative uppercase tracking-wide">
+        <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Today's deals</span>
+        </h2>
+        <div className="w-24 h-1 bg-orange-500 mx-auto m-5 rounded"></div>
       <div className="grid grid-cols-2 gap-[35px] mt-6">
         {/* Super Deals Section */}
         <div className="relative bg-[url('https://ae01.alicdn.com/kf/S750461e03a75471cac965e67d7d557229.jpg')] bg-cover bg-no-repeat group/super rounded-2xl">
