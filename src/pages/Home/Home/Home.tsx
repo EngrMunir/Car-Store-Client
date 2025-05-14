@@ -13,14 +13,14 @@ const Home = () => {
     if(isLoading){
         return <p>Loading</p>
     }
-    // console.log('home', carsData);
+    console.log('home', carsData);
     return (
        <>
         <div>
             <Banner/>
             <Featured/>
-            <TodayDeals data={carsData}/>
-            <SliderCategory data={carsData}/>
+            <TodayDeals data={{ data: carsData?.data ?? [] }} />
+            <SliderCategory data={{ data: carsData?.data ?? [] }} />
             <CompanyFeatures/>
             <Newsletter/>
             <FAQ/>

@@ -22,9 +22,21 @@ export type TCar = {
     description: string;
     image: string;
     inStock: boolean;
+    // discount?:number;
     model: string;
     price: number;
     quantity: number;
     updatedAt: string;
     year: number;
   };
+
+ export type TOrder = {
+  _id: string;
+  status: string;
+  totalPrice?: number;
+  createdAt: string;
+  userEmail: string;
+  user: string;
+  products: Array<any>; 
+  transaction: any;     
+};

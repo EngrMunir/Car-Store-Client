@@ -4,6 +4,7 @@ import React from 'react';
 import { useAppSelector } from '@/redux/features/hook';
 import { selectCurrentUser } from '@/redux/features/auth/authSlice';
 import { useGetOrderByEmailQuery } from '@/redux/features/order/order';
+import { TOrder } from '@/types';
 
 const MyOrderHistory: React.FC = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -39,7 +40,7 @@ const MyOrderHistory: React.FC = () => {
 
       {orders.length > 0 ? (
         <div className="space-y-4">
-          {orders.map((order) => (
+          {orders.map((order:TOrder) => (
             <div key={order._id} className="border p-4 rounded shadow">
               <h2 className="font-semibold">Order ID: {order._id}</h2>
               <p>Status: {order.status}</p>

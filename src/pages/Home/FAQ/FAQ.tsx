@@ -36,8 +36,8 @@ const FAQ = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      <div className="container px-6 py-10 mx-auto">
+    <div className="bg-white dark:bg-gray-900 pt-4">
+      <div className="container mx-auto">
         <h1 className="text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white text-center">
           Frequently Asked Questions
         </h1>

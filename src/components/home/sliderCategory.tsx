@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Swiper, SwiperSlide } from "swiper/react"
-import 'swiper/css';
-import 'swiper/css/effect-fade';
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { EffectFade, Navigation } from "swiper/modules";
 // import { calculateDiscountPrice } from "@/lib/calculateDiscountPrice";
@@ -10,15 +8,9 @@ import { Link } from "react-router-dom";
 import { homeCategoryData } from "./homeCategoryData";
 import { TCarData } from "@/types";
 
-  
-//   type SliderCategoryProps = {
-//     data: CarData[];
-//   };
-  
-
 const SliderCategory = ({ data }: { data: { data: TCarData[] } }) => {
     console.log('slider category',data.data)
-    if (!data || data.length === 0) {
+    if (!data || data.data.length === 0) {
         return <p className="text-center mt-8">No categories to show</p>;
       }
     return (

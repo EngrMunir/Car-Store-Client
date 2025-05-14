@@ -23,7 +23,7 @@ const TodayDeals = ({ data }: { data: { data: TCarData[] } }) => {
           </div>
           <div className="py-6 px-8">
             <Swiper
-              slidesPerView={3}
+              slidesPerView={1}
               spaceBetween={16}
               navigation={{
                 nextEl: ".next-el",
@@ -36,7 +36,7 @@ const TodayDeals = ({ data }: { data: { data: TCarData[] } }) => {
                 data?.data.map(({inStock, _id, price, image, brand}) => {
                   return (
                     <SwiperSlide key={_id}>
-                      <Card _id={_id} inStock={inStock} discountPercentageShow={true} price={price} image={image} brand={brand} />
+                      <Card _id={_id} inStock={inStock} price={price} image={image} brand={brand} />
                     </SwiperSlide>
                   )
                 })
@@ -64,7 +64,7 @@ const TodayDeals = ({ data }: { data: { data: TCarData[] } }) => {
           </div>
           <div className="py-6 px-8">
             <Swiper
-              slidesPerView={3}
+              slidesPerView={1}
               spaceBetween={16}
               navigation={{
                 nextEl: ".next-el-brand",
@@ -77,7 +77,7 @@ const TodayDeals = ({ data }: { data: { data: TCarData[] } }) => {
                 data.data.map(({ _id, price, image, brand, inStock }) => {
                   return (
                     <SwiperSlide key={_id}>
-                      <Card _id={_id} discountPercentageShow={false} price={price} image={image} brand={brand} inStock={inStock} />
+                      <Card _id={_id} price={price} image={image} brand={brand} inStock={inStock} />
                     </SwiperSlide>
                   )
                 })
@@ -99,14 +99,14 @@ export default TodayDeals
 
 interface CardPropsType {
   _id: number | string
-//   discount: number,
+  discount?: number,
   price: number,
   image: string,
   brand: string,
-  discountPercentageShow: boolean,
+  // discountPercentageShow: boolean,
   inStock:boolean,
 }
-const Card = ({_id, price, image,inStock, brand, discountPercentageShow }: CardPropsType) => {
+const Card = ({_id, price, image,inStock, brand }: CardPropsType) => {
 //   const calculatePrice = calculateDiscountPrice(unit_price, discount)
 
   return (
@@ -115,20 +115,20 @@ const Card = ({_id, price, image,inStock, brand, discountPercentageShow }: CardP
         <img width={216} height={216} sizes="100vw" src={image} alt="img" className="rounded-md group-hover:scale-105 transition-all duration-300" />
       </Link>
       <div className="mt-3">
-        <Link href={`/product-details/${_id}`} className="min-h-10 line-clamp-2 font-[450] leading-5 hover:text-primary-foreground transition-all duration-300">{name}</Link>
+        <Link to={`/product-details/${_id}`} className="min-h-10 line-clamp-2 font-[450] leading-5 hover:text-primary-foreground transition-all duration-300">{brand}</Link>
         <div className="mt-4">
           <p className="font-bold 3xl:text-xl inline-block leading-none mr-2">US ${price}</p>
-          <p className="line-through text-muted inline-block leading-none 3xl:text-base text-xs">US ${price}</p>
+          <p className="line-through text-muted inline-block leading-none 3xl:text-base text-xs">US ${inStock}</p>
         </div>
-        {
+        {/* {
           discountPercentageShow ?
-            <div className="inline-block text-sm bg-primary px-1 py-[3px] text-white mt-1.5">-{price}%</div>
+            <div className="inline-block text-sm bg-blue-600 px-1 py-[3px] text-white mt-1.5">-{price}%</div>
             :
             <div className="text-primary-foreground px-1 py-[3px] mt-1.5 leading-[14px] flex gap-2">
               You save
               <span className="font-semibold">US $18.82</span>
             </div>
-        }
+        } */}
       </div>
     </div>
   )

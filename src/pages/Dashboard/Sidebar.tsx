@@ -1,5 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 import { GrDeliver } from "react-icons/gr";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";

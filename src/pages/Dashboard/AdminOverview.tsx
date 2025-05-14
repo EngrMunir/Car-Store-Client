@@ -1,70 +1,85 @@
-import { TrendingUp } from "lucide-react"
-import { LabelList, Pie, PieChart } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { LabelList, Pie, PieChart } from "recharts";
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { useGetUsersQuery } from "@/redux/features/User/userManagementApi"
-import { useGetOrdersQuery } from "@/redux/features/order/order"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { useGetUsersQuery } from "@/redux/features/User/userManagementApi";
+import { useGetOrdersQuery } from "@/redux/features/order/order";
 
-
-const chartConfig = {
-  visitors: {
-    label: "Total",
-  },
+type Order = {
+  _id: string;
+  userEmail: string;
   user: {
-    label: "User",
-    color: "hsl(var(--chart-1))",
-  },
-  order: {
-    label: "Order",
-    color: "hsl(var(--chart-2))",
-  },
-  delivered: {
-    label: "Delivered",
-    color: "hsl(var(--chart-3))",
-  },
-  pending: {
-    label: "Pending",
-    color: "hsl(var(--chart-4))",
-  },
-  shipped: {
-    label: "Shipped",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    photo?: string;
+  };
+  products: { productId: string; quantity: number }[]; // Adjust as per actual structure
+  transaction: {
+    id: string;
+    transactionStatus: string;
+  };
+  totalPrice: number;
+  status: "Pending" | "Shipped" | "Delivered";
+  createdAt: string;
+  updatedAt: string;
+};
 
- const AdminOverview=()=> {
-    const {data:responseData, isLoading } =  useGetUsersQuery(undefined);
-    const { data: ordersResponse } = useGetOrdersQuery(undefined);    
+const chartConfig: ChartConfig = {
+  visitors: { label: "Total" },
+  user: { label: "Users", color: "var(--color-chrome)" },
+  order: { label: "Orders", color: "var(--color-safari)" },
+  delivered: { label: "Delivered", color: "var(--color-firefox)" },
+  pending: { label: "Pending", color: "var(--color-edge)" },
+  shipped: { label: "Shipped", color: "var(--color-opera)" },
+};
 
-    const users = responseData?.data || [];
-    const orders = ordersResponse?.data || [];
+const AdminOverview = () => {
+  const { data: userRes, isLoading: loadingUsers } = useGetUsersQuery(undefined);
+  const { data: orderRes, isLoading: loadingOrders } = useGetOrdersQuery(undefined);
 
-    console.log(orders);
-    
-    const totalUsers = users.length;
-    const totalOrders = orders.length;
-    let totalDelivered = 0;
-    let totalPending = 0;
-    let totalShipped =0;
+  if (loadingUsers || loadingOrders) return <p>Loading...</p>;
 
-    orders.forEach((order) => {
-        if (order.status === "Pending") totalPending++;
-        else if (order.status === "Shipped") totalShipped++;
-        else if (order.status === "Delivered") totalDelivered++;
-      });
+  const users = userRes?.data || [];
+  const orders: Order[] = orderRes?.data || [];
 
-const chartData = [
-  { browser: "user", visitors: totalUsers, fill: "var(--color-chrome)" },
-  { browser: "order", visitors: totalOrders, fill: "var(--color-safari)" },
-  { browser: "delivered", visitors: totalDelivered, fill: "var(--color-firefox)" },
-  { browser: "pending", visitors: totalPending, fill: "var(--color-edge)" },
-  { browser: "shipped", visitors: totalShipped, fill: "var(--color-firefox)" },
-];
+  const totalUsers = users.length;
+  const totalOrders = orders.length;
 
-if(isLoading){
-    return <p>Loading...</p>
-}
+  const statusCount = {
+    delivered: 0,
+    pending: 0,
+    shipped: 0,
+  };
+
+  orders.forEach((order) => {
+    if (order.status === "Delivered") statusCount.delivered++;
+    else if (order.status === "Pending") statusCount.pending++;
+    else if (order.status === "Shipped") statusCount.shipped++;
+  });
+
+  const chartData = [
+    { key: "user", visitors: totalUsers, fill: chartConfig.user.color },
+    { key: "order", visitors: totalOrders, fill: chartConfig.order.color },
+    { key: "delivered", visitors: statusCount.delivered, fill: chartConfig.delivered.color },
+    { key: "pending", visitors: statusCount.pending, fill: chartConfig.pending.color },
+    { key: "shipped", visitors: statusCount.shipped, fill: chartConfig.shipped.color },
+  ];
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
@@ -77,12 +92,10 @@ if(isLoading){
           className="mx-auto aspect-square max-h-[250px] [&_.recharts-text]:fill-background"
         >
           <PieChart>
-            <ChartTooltip
-              content={<ChartTooltipContent nameKey="visitors" hideLabel />}
-            />
-            <Pie data={chartData} dataKey="visitors">
+            <ChartTooltip content={<ChartTooltipContent nameKey="visitors" hideLabel />} />
+            <Pie data={chartData} dataKey="visitors" nameKey="key">
               <LabelList
-                dataKey="browser"
+                dataKey="key"
                 className="fill-background"
                 stroke="none"
                 fontSize={12}
@@ -103,7 +116,7 @@ if(isLoading){
         </div>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
 export default AdminOverview;

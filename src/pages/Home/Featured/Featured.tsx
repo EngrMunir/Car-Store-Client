@@ -12,7 +12,7 @@ const Featured = () => {
     }
 
     return (
-         <div className="container">
+         <div className="container pt-4 mx-auto">
             <h2 className="text-4xl font-extrabold text-center relative uppercase tracking-wide">
             <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
                 Featured Products
